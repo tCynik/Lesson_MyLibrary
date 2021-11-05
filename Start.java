@@ -15,9 +15,10 @@ public class Start {
         reader1.dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
         Reader reader2 = new Reader("Семен Васильев", 1979,2, 493722);
+        reader2.dolgiPastLoad("1984", bazaKnig);
 
-        reader1.print(bazaKnig); // отсылка к интерфейсу
-        //reader2.print();
+        //reader1.print(bazaKnig); // отсылка к интерфейсу
+        //reader2.print(bazaKnig);
 
         //////////// допили операции возврата и взятия книги:
         //////////// раньше все книги хранились как отдельные объекты, теперь как коллекция
@@ -32,7 +33,7 @@ public class Start {
 /////////////// объект книгу, записанную в нашу коллекцию. ТАКОЕ ВОЗМОЖНО?????!!!
 
 // выводим список книг из нашей библиотеки - временно закомментим
-        //allBooks(bazaKnig); //
+        allBooks(bazaKnig); //
     }
 
     //////////// вызов списка всех книг
@@ -41,7 +42,7 @@ public class Start {
         int num = 1;
         for (Book theBook: bazaKnig) {
             System.out.print(num+" ");
-            theBook.print();
+            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
             num++;
         }
     }

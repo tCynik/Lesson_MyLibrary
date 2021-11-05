@@ -40,7 +40,8 @@ public class Reader {
         knigiNaRukah.add(index);
 
         ///////////////// делаем запись в БД книг - количество и список у кого на руках
-
+        Book.bookTake(index, bazaKnig);
+        // запись -1 к текущей книге
 
     }
 /*

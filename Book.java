@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Book implements Printing {
+public class Book  {
     String naznachenie;
     private String nazvanie;
     private String avtor;
     private int kolichestvo = 0;
+    private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
     ////////// у каждой книги д.б. поле - массив с указанием № читательского билета тех, у кого на руках
 
     public Book (String nazvanie, String avtor, int kolichestvo){ // конструктор книги
@@ -17,12 +18,34 @@ public class Book implements Printing {
         this.avtor = avtor;
         this.kolichestvo = kolichestvo;
     }
-    void bookTake () {
-        kolichestvo--;
+
+    public static void bookTakeHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // записываем ID держателя книги
+        Book theKniga = (Book) bazaKnig.get(indexBook);
+        theKniga.bookHolders.add(indexHolder);
+        bazaKnig.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве
     }
 
-    void bookPut () {
-        kolichestvo++;
+    public static void bookTake (int index, List<Book> bazaKnig) { // меняем количество книг
+        Book theKniga = (Book) bazaKnig.get(index);
+        theKniga.kolichestvo--; //
+        bazaKnig.set(index, theKniga); // изменяем параметр количества и перезаисываем в нашем массиве
+    }
+
+    public static void bookPutHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // убираем ID держателя книги
+        Book theKniga = (Book) bazaKnig.get(indexBook);
+        int count = 0;
+        for (int index:theKniga.bookHolders) {
+            if (index == indexBook) {
+                theKniga.bookHolders.remove(count);
+            }
+        }
+        bazaKnig.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве
+    }
+
+    public static void bookPut (int index, List<Book> bazaKnig) {
+        Book theKniga = (Book) bazaKnig.get(index);
+        theKniga.kolichestvo++; //
+        bazaKnig.set(index, theKniga); // изменяем параметр количества и перезаисываем в нашем массиве
     }
 
     int skolkoKnig () {
@@ -48,9 +71,18 @@ public class Book implements Printing {
     public String getAvtor(){
         return avtor;
     }
+////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
+    public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
+        int indexBook = getIndex(nazvanie, bazaKnig);
+        Book theBook = (Book) bazaKnig.get(indexBook);
+        System.out.println("Справка об издании: "+naznachenie + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+                + kolichestvo+ " экземпляров, на руках ");
+        //int howMuchBooks = 0;
+        //for (:        прокручивсем всех читателей через массив читателей
+        //     ) {      у каждого читателя перебираем список книг на руках в поисках нужного indexBook
+                   //// если indexBook подходящий, прибавляем единицу к howMuchBooks
 
-    public void print (){ // вывод на печать через единую команду в терминале!
-        System.out.println("Справка об издании: "+naznachenie + " "+ nazvanie+", автор "+avtor+", в библиотеке " + kolichestvo+ " экземпляров");
+        //}
     }
 
     public static List<Book> bazaKnigDownload() throws FileNotFoundException {// метод для подгрузки БД книг из файла
