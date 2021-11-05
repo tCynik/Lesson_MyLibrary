@@ -12,13 +12,12 @@ public class Start {
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса
         //int lastNumBileta = 1; // peremennaya nachala scheta biletov - потом допилить вызов конструктора через цикл с ном билета++
         Reader reader1 = new Reader("Иван Иванов", 1991, 1,494036); // создать отдельный класс с базой данных
-        dolgiInput(reader1,"Мурзилка, Довод, Хоббит", bazaKnig);
+        reader1.dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
         Reader reader2 = new Reader("Семен Васильев", 1979,2, 493722);
-        dolgiInput(reader2,"Русский язык, 1984, Филососфия Java, Мурзилка", bazaKnig);
 
-        reader1.print(); // отсылка к интерфейсу
-        reader2.print();
+        reader1.print(bazaKnig); // отсылка к интерфейсу
+        //reader2.print();
 
         //////////// допили операции возврата и взятия книги:
         //////////// раньше все книги хранились как отдельные объекты, теперь как коллекция
@@ -47,6 +46,7 @@ public class Start {
         }
     }
 
+    /*
     public static void dolgiInput(Reader reader, String dolgChit, List<Book> bazaKnig){ // метод интеграции старых долгов читателя
         String[] slova; // массив с именами книг долгов
         String razdel = ", ";
@@ -57,6 +57,8 @@ public class Start {
         }
         reader.zapisDolga(dolgiIndexes); // записываем читателю его долги по индексам книг из базы
     }
+
+     */
 
 }
 

@@ -29,8 +29,9 @@ public class Book implements Printing {
         return kolichestvo;
     }
 
-    public String getNazvanie(){
-        return nazvanie;
+    public static String getNazvanie(int index, List<Book> bazaKnig){
+        String nazvKnigi = bazaKnig.get(index).nazvanie;
+        return nazvKnigi;
     }
 
     public static int getIndex(String nameTheBook, List<Book> bazaKnig){

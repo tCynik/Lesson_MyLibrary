@@ -1,14 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reader implements Printing {
+public class Reader {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private int numberBileta; // номера ранее выданных билетов
     private final int yearBirth;
     private int phoneNumber;
     //////////////////// перепиши на массив с перечислением индексов книг, которые на руках
-    List<int> knigiNaRukah = new ArrayList(); // номера книг, которые на руках у юзера
+    List<Integer> knigiNaRukah = new ArrayList(); // номера книг, которые на руках у юзера
 
 /////////   разобраться с номерами билетов! Добавить статический метод определения №№ билетов новых юзеров:
 ///////// перебираем все билеты с 1 по массиву читателей и если есть пустой, то берем его, иначе беерм последний++
@@ -22,7 +22,28 @@ public class Reader implements Printing {
 ///////// вывод сообщения: Удаление читателя "ФИО" невозможно: у читателя не возвращены книги: "перечисление книг"
 /////////   на будущее сделать отдельную базу для бывших читателей (при удалении)
 
+    void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
+        String[] knigiArray = knigi.split(", ");
+        for (String theKniga: knigiArray) {
+            int index = Book.getIndex(theKniga, bazaKnig);
+            bookRecTake(index, bazaKnig);
+        }
+    }
 
+    void BookTake(String theKniga, List<Book> bazaKnig){
+        int index = Book.getIndex(theKniga, bazaKnig);
+        bookRecTake(index, bazaKnig);
+    }
+
+    private void bookRecTake(int index, List<Book> bazaKnig){
+        // делаем запись в БД читателей - список книг на руках
+        knigiNaRukah.add(index);
+
+        ///////////////// делаем запись в БД книг - количество и список у кого на руках
+
+
+    }
+/*
     void zapisDolga(int[] dolgiIndexes){ // записываем читателю его долги по индексам книг из базы
         for (int i = 0; i< dolgiIndexes.length; i++){
             boolean flag = false;
@@ -38,8 +59,11 @@ public class Reader implements Printing {
             }
         }
     }
+
+ */
     ////////////////////// перепиши в связи с переводом книг в коллекцию
-    public void takeBook(Book book){ // на вводе в метод имя книги, далее поиск индекса по имени -
+    /*
+    public void takeBook(String bookName, List<Book> bazaknig){ // на вводе в метод имя книги, далее поиск индекса по имени -
         ///////////////// смотри метод getIndex(имя, базаКниг)
         String nazv = book.getNazvanie();
         knigiNaRukah.add(nazv);
@@ -47,28 +71,32 @@ public class Reader implements Printing {
         book.bookTake();
     }
 
+     */
+
     //////// перепиши в соотв с замечаниями выше по takeBook()
+    /*
     void retutnBook(Book book){ // вернул книгу - пишем название книги
         String nazv = book.getNazvanie();
         int bookIndex = knigiNaRukah.indexOf(nazv); // ищем индекс книги в списке
         for (int i = bookIndex; i < knigiNaRukah.size()-1; i++ ) { // убираем возвращенну книгу, сдвигая слежующие влево
             knigiNaRukah.set(i, knigiNaRukah.get(i+1));
         }
-        knigiNaRukah.set(knigiNaRukah.size()-1, "-=EMPTY=-");
+        //knigiNaRukah.set(knigiNaRukah.size()-1, "-=EMPTY=-");
         System.out.println(nameReader+" возвратил книгу " + book.getNazvanie());
         book.bookPut();
     }
-    public void print(){ // вывод на печать через единую команду в терминале!
+
+     */
+    public void print(List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
         System.out.println("Справка о клиенте: "+theBiblioteka+". Читатель "+nameReader+ " "+ yearBirth + " г.р., читательский билет №" + numberBileta+", тел.: "+phoneNumber);
         System.out.print("На руках у читателя книги: ");
-///////////////////////// перепиши исходя из того, что у читателя хранятся только №№ книг, но не названия
-        for (int i=0; i< knigiNaRukah.size(); i++) {
-            if (knigiNaRukah.get(i) != "-=EMPTY=-") {
-                System.out.print(knigiNaRukah.get(i));
-                System.out.print(", ");
-            } else System.out.println(".");
+        String nazvanie;
+        for (int i=0; i< knigiNaRukah.size()-1; i++) {
+            nazvanie = Book.getNazvanie(knigiNaRukah.get(i), bazaKnig);
+            System.out.print(nazvanie+", ");
         }
-        System.out.println();
+        nazvanie = Book.getNazvanie(knigiNaRukah.get(knigiNaRukah.size()-1),bazaKnig);
+        System.out.println(nazvanie+"."); // печатаем последнюю книгу
     }
 
     public static void biletNumberNew(){ // определяем очередной номер билета
