@@ -5,17 +5,19 @@ import java.util.ArrayList;
 public class Start {
     public static void main (String[] args) throws FileNotFoundException {
         List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
+        List<Reader> bazaReaders = Reader.BazaReadersDownload();
 
-        ///////////////// читателей реализовать так же через коллекцию.
+        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+        Reader.printReader(2, bazaReaders, bazaKnig);
+
+        bazaReaders.get(2).bookTake("1984", bazaKnig);
+        Reader.printReader(2, bazaReaders, bazaKnig);
+
         ///////////////// там же читателям присваивать String через запятую с долгами книг, и дальше записывать долги
-        ///////////////// читателям добавить список книг которые на руках
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса
-        //int lastNumBileta = 1; // peremennaya nachala scheta biletov - потом допилить вызов конструктора через цикл с ном билета++
-        Reader reader1 = new Reader("Иван Иванов", 1991, 1,494036); // создать отдельный класс с базой данных
-        reader1.dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
-        Reader reader2 = new Reader("Семен Васильев", 1979,2, 493722);
-        reader2.dolgiPastLoad("1984", bazaKnig);
+        //Reader reader2 = new Reader("Семен Васильев", 1979,2, "493722");
+        //reader2.dolgiPastLoad("1984", bazaKnig);
 
         //reader1.print(bazaKnig); // отсылка к интерфейсу
         //reader2.print(bazaKnig);
@@ -33,7 +35,7 @@ public class Start {
 /////////////// объект книгу, записанную в нашу коллекцию. ТАКОЕ ВОЗМОЖНО?????!!!
 
 // выводим список книг из нашей библиотеки - временно закомментим
-        allBooks(bazaKnig); //
+        //allBooks(bazaKnig); //
     }
 
     //////////// вызов списка всех книг

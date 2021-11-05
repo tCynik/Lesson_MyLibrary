@@ -90,10 +90,10 @@ public class Book  {
         File bdBooks = new File("C:\\Users\\Admin\\IdeaProjects\\LsnBiblioteka\\src\\BdBooks");
         Scanner scan1 = new Scanner(bdBooks);
         while(scan1.hasNextLine()){
-            String theLine = scan1.nextLine();
-            String[] dannie = theLine.split(", ");
-            int skolkoKnig =Integer.parseInt(dannie[2]);
-            bazaKnig.add(new Book(dannie[0], dannie[1], skolkoKnig));
+            String theLine = scan1.nextLine(); // записываем построчно содержимое файла
+            String[] dannie = theLine.split(", "); // делим запятой строчку на отдельные параметры
+            int skolkoKnig =Integer.parseInt(dannie[2]); // переводим в int информацию о количестве книг эого экземпляра
+            bazaKnig.add(new Book(dannie[0], dannie[1], skolkoKnig)); // добавляем параметры в ArrayList
         }
         return bazaKnig;
     }
