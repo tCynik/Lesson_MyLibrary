@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,8 +14,6 @@ public class Reader {
     //////////////////// перепиши на массив с перечислением индексов книг, которые на руках
     List<Integer> knigiNaRukah = new ArrayList(); // номера книг, которые на руках у юзера
 
-/////////   разобраться с номерами билетов! Добавить статический метод определения №№ билетов новых юзеров:
-///////// перебираем все билеты с 1 по массиву читателей и если есть пустой, то берем его, иначе беерм последний++
     public Reader(String name, int year, int number, String phone){ // создаем конструктор. Номера билетов определяются новые
         this.nameReader = name;                      // в случае необходимости добавить нов конструктор с
         this.yearBirth = year;                       // принудительным вводом № билета на случай удаления аккаунта
@@ -36,6 +35,7 @@ public class Reader {
     void bookTake(String theKniga, List<Book> bazaKnig){
         int index = Book.getIndex(theKniga, bazaKnig);
         bookRecTake(index, bazaKnig);
+        System.out.println("Читатель взял книгу "+theKniga);
     }
 
     private void bookRecTake(int index, List<Book> bazaKnig){
