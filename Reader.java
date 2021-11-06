@@ -31,34 +31,23 @@ public class Reader {
             bookRecTake(index, bazaKnig);
         }
     }
-
-    void bookTake(String theKniga, List<Book> bazaKnig){
-        int index = Book.getIndex(theKniga, bazaKnig);
+///////////////// добавь что за читатель
+    void bookTake(String nameKniga, List<Book> bazaKnig){
+        int index = Book.getIndex(nameKniga, bazaKnig);
+        String avtor = Book.getAvtor(index, bazaKnig);
         bookRecTake(index, bazaKnig);
-        System.out.println("Читатель взял книгу "+theKniga);
+        System.out.println("Читатель "+nameReader+" взял книгу "+nameKniga+" авт. "+avtor);
     }
 
     private void bookRecTake(int index, List<Book> bazaKnig){
         // делаем запись в БД читателей - список книг на руках
         knigiNaRukah.add(index);
 
-        ///////////////// делаем запись в БД книг - количество и список у кого на руках
+        // делаем запись в БД книг - количество и список у кого на руках
         Book.bookTake(index, bazaKnig);
         // запись -1 к текущей книге
 
     }
-
-    ////////////////////// перепиши в связи с переводом книг в коллекцию
-    /*
-    public void takeBook(String bookName, List<Book> bazaknig){ // на вводе в метод имя книги, далее поиск индекса по имени -
-        ///////////////// смотри метод getIndex(имя, базаКниг)
-        String nazv = book.getNazvanie();
-        knigiNaRukah.add(nazv);
-        System.out.println(nameReader+" взял книгу " + book.getNazvanie());
-        book.bookTake();
-    }
-
-     */
 
     //////// перепиши в соотв с замечаниями выше по takeBook()
     /*
@@ -74,32 +63,27 @@ public class Reader {
     }
 
      */
-    public static void printReader(int readerNumber, List<Reader> bazaReaders, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
-        Reader theReader = bazaReaders.get(readerNumber);
-        System.out.println("Справка о клиенте: "+theBiblioteka+". Читатель "+theReader.nameReader+ " "+
-                theReader.yearBirth + " г.р., читательский билет №" + theReader.numberBileta+", тел.: "+
-                theReader.phoneNumber);
-        if (theReader.knigiNaRukah.size() > 0) {
+    public void printReader( List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
+        //Reader theReader = bazaReaders.get(readerNumber);
+        System.out.println("Справка о клиенте: "+theBiblioteka+". Читатель "+nameReader+ " "+yearBirth +
+                " г.р., читательский билет №" + numberBileta+", тел.: "+ phoneNumber);
+        if (knigiNaRukah.size() > 0) {
             System.out.print("На руках у читателя книги: ");
             String nazvanie;
-            for (int i = 0; i < theReader.knigiNaRukah.size() - 1; i++) {
-                nazvanie = Book.getNazvanie(theReader.knigiNaRukah.get(i), bazaKnig);
+            for (int i = 0; i < knigiNaRukah.size() - 1; i++) {
+                nazvanie = Book.getNazvanie(knigiNaRukah.get(i), bazaKnig);
                 System.out.print(nazvanie + ", ");
             }
-            nazvanie = Book.getNazvanie(theReader.knigiNaRukah.get(theReader.knigiNaRukah.size() - 1), bazaKnig);
+            nazvanie = Book.getNazvanie(knigiNaRukah.get(knigiNaRukah.size() - 1), bazaKnig);
             System.out.println(nazvanie + "."); // печатаем последнюю книгу
         } else System.out.println("У читателя нет книг на руках");
     }
 
-    public static void biletNumberNew(){ // определяем очередной номер билета
-
-    }
-
-    /////////// переопределить исключение в виде ошибки "Файл не найден, база данных пользователей в приложении пуста"
-    public static List<Reader> BazaReadersDownload() throws FileNotFoundException {
+    public static List<Reader> BazaReadersDownload(){
         List<Reader> bazaReaders = new ArrayList();
         File bdReaders = new File("C:\\Users\\Admin\\IdeaProjects\\LsnBiblioteka\\src\\BdReaders");
-        Scanner scan = new Scanner(bdReaders);
+        Scanner scan = null;
+        try { scan = new Scanner(bdReaders);
         int count = 0;
         while (scan.hasNextLine()){
             String theLine = scan.nextLine();
@@ -109,6 +93,9 @@ public class Reader {
             int numberBileta = count;
             bazaReaders.add(new Reader(pole[0], yearBirth, numberBileta, pole[2] ));
         }
-        return bazaReaders;
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл не найден. База данных по читателям пуста.");
+        }
+return bazaReaders;
     }
 }

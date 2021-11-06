@@ -68,9 +68,12 @@ public class Book  {
         return index;
     }
 
-    public String getAvtor(){
-        return avtor;
+    public static String getAvtor(int index, List<Book> bazaKnig){
+        String nameAvtor;
+        nameAvtor=bazaKnig.get(index).avtor;
+        return nameAvtor;
     }
+
 ////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
     public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
         int indexBook = getIndex(nazvanie, bazaKnig);
@@ -85,10 +88,14 @@ public class Book  {
         //}
     }
 
-    public static List<Book> bazaKnigDownload() throws FileNotFoundException {// метод для подгрузки БД книг из файла
+    public static List<Book> bazaKnigDownload() {// метод для подгрузки БД книг из файла
         List<Book> bazaKnig = new ArrayList();
         File bdBooks = new File("C:\\Users\\Admin\\IdeaProjects\\LsnBiblioteka\\src\\BdBooks");
-        Scanner scan1 = new Scanner(bdBooks);
+        Scanner scan1 = null;
+        try { scan1 = new Scanner(bdBooks);
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка: файл базы данных не обнаружен, библиотека пуста");
+        }
         while(scan1.hasNextLine()){
             String theLine = scan1.nextLine(); // записываем построчно содержимое файла
             String[] dannie = theLine.split(", "); // делим запятой строчку на отдельные параметры

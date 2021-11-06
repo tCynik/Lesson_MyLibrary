@@ -3,15 +3,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Start {
-    public static void main (String[] args) throws FileNotFoundException {
+    public static void main (String[] args) {
         List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
         List<Reader> bazaReaders = Reader.BazaReadersDownload();
 
         bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
-        Reader.printReader(2, bazaReaders, bazaKnig);
+        bazaReaders.get(2).printReader( bazaKnig);
 
         bazaReaders.get(2).bookTake("1984", bazaKnig);
-        Reader.printReader(2, bazaReaders, bazaKnig);
+        bazaReaders.get(2).printReader( bazaKnig);
 
         ///////////////// там же читателям присваивать String через запятую с долгами книг, и дальше записывать долги
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса
