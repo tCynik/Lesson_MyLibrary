@@ -10,7 +10,7 @@ public class Book  {
     private String avtor;
     private int kolichestvo = 0;
     private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
-    ////////// у каждой книги д.б. поле - массив с указанием № читательского билета тех, у кого на руках
+    ////////// прикрутить для каждой книги поле - массив с указанием № читательского билета тех, у кого на руках
 
     public Book (String nazvanie, String avtor, int kolichestvo){ // конструктор книги
         naznachenie = "книга";

@@ -7,11 +7,17 @@ public class Start {
         List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
         List<Reader> bazaReaders = Reader.BazaReadersDownload();
 
-        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
-        bazaReaders.get(2).printReader( bazaKnig);
+        try { bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+        } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
 
-        bazaReaders.get(2).bookTake(4, bazaKnig);
-        bazaReaders.get(2).printReader( bazaKnig);
+        try { bazaReaders.get(2).printReader( bazaKnig);
+        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных");}
+
+        try { bazaReaders.get(2).bookTake(4, bazaKnig);
+        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");}
+
+        try { bazaReaders.get(2).printReader( bazaKnig);
+        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных");}
 
         ///////////////// там же читателям присваивать String через запятую с долгами книг, и дальше записывать долги
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса

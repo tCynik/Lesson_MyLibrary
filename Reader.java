@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -87,6 +88,8 @@ public class Reader {
         }
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден. База данных по читателям пуста.");
+        //} catch (ParseException e) {
+        //    System.out.println("Ошибка ввода информации - неверные данные.");
         }
 return bazaReaders;
     }
