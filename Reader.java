@@ -28,25 +28,17 @@ public class Reader {
         String[] knigiArray = knigi.split(", ");
         for (String theKniga: knigiArray) {
             int index = Book.getIndex(theKniga, bazaKnig);
-            bookRecTake(index, bazaKnig);
+            knigiNaRukah.add(index); // делаем запись в список книг на руках
+            Book.bookTake(index, bazaKnig); // делаем запись в БД книг
         }
     }
-///////////////// добавь что за читатель
-    void bookTake(String nameKniga, List<Book> bazaKnig){
-        int index = Book.getIndex(nameKniga, bazaKnig);
+
+    void bookTake(int index, List<Book> bazaKnig){
+        String nazv = Book.getNazvanie(index, bazaKnig);
         String avtor = Book.getAvtor(index, bazaKnig);
-        bookRecTake(index, bazaKnig);
-        System.out.println("Читатель "+nameReader+" взял книгу "+nameKniga+" авт. "+avtor);
-    }
-
-    private void bookRecTake(int index, List<Book> bazaKnig){
-        // делаем запись в БД читателей - список книг на руках
-        knigiNaRukah.add(index);
-
-        // делаем запись в БД книг - количество и список у кого на руках
-        Book.bookTake(index, bazaKnig);
-        // запись -1 к текущей книге
-
+        knigiNaRukah.add(index); // делаем запись в список книг на руках
+        Book.bookTake(index, bazaKnig); // делаем запись в БД книг
+        System.out.println("Читатель "+nameReader+" взял книгу "+nazv+" авт. "+avtor);
     }
 
     //////// перепиши в соотв с замечаниями выше по takeBook()

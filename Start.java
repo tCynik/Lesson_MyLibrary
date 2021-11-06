@@ -10,7 +10,7 @@ public class Start {
         bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
         bazaReaders.get(2).printReader( bazaKnig);
 
-        bazaReaders.get(2).bookTake("1984", bazaKnig);
+        bazaReaders.get(2).bookTake(4, bazaKnig);
         bazaReaders.get(2).printReader( bazaKnig);
 
         ///////////////// там же читателям присваивать String через запятую с долгами книг, и дальше записывать долги
