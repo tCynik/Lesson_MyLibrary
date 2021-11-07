@@ -74,7 +74,7 @@ public class Reader {
 
     public static List<Reader> BazaReadersDownload(){
         List<Reader> bazaReaders = new ArrayList();
-        File bdReaders = new File("C:\\Users\\Admin\\IdeaProjects\\LsnBiblioteka\\src\\BdReaders");
+        File bdReaders = new File("BdReaders");
         Scanner scan = null;
         try { scan = new Scanner(bdReaders);
         int count = 0;

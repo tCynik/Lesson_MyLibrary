@@ -90,7 +90,7 @@ public class Book  {
 
     public static List<Book> bazaKnigDownload() {// метод для подгрузки БД книг из файла
         List<Book> bazaKnig = new ArrayList();
-        File bdBooks = new File("C:\\Users\\Admin\\IdeaProjects\\LsnBiblioteka\\src\\BdBooks");
+        File bdBooks = new File("BdBooks");
         Scanner scan1 = null;
         try { scan1 = new Scanner(bdBooks);
         } catch (FileNotFoundException e) {
