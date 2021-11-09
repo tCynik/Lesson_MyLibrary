@@ -1,5 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.sql.SQLOutput;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.Scanner;
 public class Reader {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
-    private int numberBileta; // номера ранее выданных билетов
+    private transient int numberBileta; // номера ранее выданных билетов
     private final int yearBirth;
     private String phoneNumber;
     //////////////////// перепиши на массив с перечислением индексов книг, которые на руках
@@ -56,7 +55,11 @@ public class Reader {
     }
 
      */
-    public void printReader( List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
+
+    /////////// добавить метод "вывести всех читателей"
+
+
+    public void printReader(List<Book> bazaKnig){ /////// вывод на печать через единую команду в терминале!
         //Reader theReader = bazaReaders.get(readerNumber);
         System.out.println("Справка о клиенте: "+theBiblioteka+". Читатель "+nameReader+ " "+yearBirth +
                 " г.р., читательский билет №" + numberBileta+", тел.: "+ phoneNumber);
@@ -72,7 +75,7 @@ public class Reader {
         } else System.out.println("У читателя нет книг на руках");
     }
 
-    public static List<Reader> BazaReadersDownload(){
+    public static List<Reader> bazaReadersDownload(){
         List<Reader> bazaReaders = new ArrayList();
         File bdReaders = new File("BdReaders");
         Scanner scan = null;
@@ -92,5 +95,29 @@ public class Reader {
         //    System.out.println("Ошибка ввода информации - неверные данные.");
         }
 return bazaReaders;
+    }
+
+    public static void uploadReadersBin (List<Reader> bazaReaders){ // uploading the readers as the Objects into file.bin
+        try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("readers.bin"))) {
+            obj.writeObject(bazaReaders); // записываем целиком объект класса List
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл выгрузки БД читателей не найден");
+        } catch (IOException e) {
+            System.out.println("Ошибка ввода-вывода при выгрузке БД читателей");
+        }
+    }
+
+    public static List<Reader> downloadReadersBin (){
+        List bazaReader = new <Reader> ArrayList();
+        try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("readers.bin"))){
+            bazaReader.add((List)obj.readObject());
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка при загрузке БД читателей: файл не найден");
+        } catch (IOException e) {
+            System.out.println("Ошибка при загрузке БД читателей: ошибка ввода-вывода");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Ошибка при загрузке БД читателей: Не найден класс");
+        }
+        return bazaReader;
     }
 }

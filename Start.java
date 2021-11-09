@@ -2,11 +2,31 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * ---=== The main commands in the programm ===---
+ * create the list of the Readers from TXT (first start option) ___________ Reader.bazareadersDownload();
+ * create the list of the Books from TXT (first start option) _____________ Book.bazaKnigDownload();
+ * download any reader's information from the past using __________________ bazaReaders.get('#Reader').dolgiPastLoad("nameOfBook",");
+ * upload total reader's information ito the prog. permanent memory _______ Reader.uploadReadersBin(bazaReaders);
+ * download  total reader's information from the prog. permanent memory ___ Reader.downloadReadersBin();
+ * download any books information from the TXT (first start option)
+ * upload total books information ito the prog. permanent memory
+ * download  total books information from the prog. permanent memory
+ */
+
+//// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) {
         List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
-        List<Reader> bazaReaders = Reader.BazaReadersDownload();
+        List<Reader> bazaReaders = Reader.bazaReadersDownload();
 
+        Reader.uploadReadersBin(bazaReaders);
+        bazaReaders.clear();
+
+        Reader.downloadReadersBin();
+
+
+        /////////////// снести в метод
         try { bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
         } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
 

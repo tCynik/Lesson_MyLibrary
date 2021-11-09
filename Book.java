@@ -8,7 +8,7 @@ public class Book  {
     String naznachenie;
     private String nazvanie;
     private String avtor;
-    private int kolichestvo = 0;
+    private transient int kolichestvo = 0;
     private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
     ////////// прикрутить для каждой книги поле - массив с указанием № читательского билета тех, у кого на руках
 
