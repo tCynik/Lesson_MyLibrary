@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Reader {
+public class Reader implements Serializable {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private transient int numberBileta; // номера ранее выданных билетов
@@ -25,20 +25,25 @@ public class Reader {
 /////////   на будущее сделать отдельную базу для бывших читателей (при удалении)
 
     void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
-        String[] knigiArray = knigi.split(", ");
-        for (String theKniga: knigiArray) {
-            int index = Book.getIndex(theKniga, bazaKnig);
-            knigiNaRukah.add(index); // делаем запись в список книг на руках
-            Book.bookTake(index, bazaKnig); // делаем запись в БД книг
-        }
+        try {
+            String[] knigiArray = knigi.split(", ");
+            for (String theKniga : knigiArray) {
+                int index = Book.getIndex(theKniga, bazaKnig);
+                knigiNaRukah.add(index); // делаем запись в список книг на руках
+                Book.bookTake(index, bazaKnig); // делаем запись в БД книг
+            }
+        } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
     }
 
     void bookTake(int index, List<Book> bazaKnig){
-        String nazv = Book.getNazvanie(index, bazaKnig);
-        String avtor = Book.getAvtor(index, bazaKnig);
-        knigiNaRukah.add(index); // делаем запись в список книг на руках
-        Book.bookTake(index, bazaKnig); // делаем запись в БД книг
-        System.out.println("Читатель "+nameReader+" взял книгу "+nazv+" авт. "+avtor);
+        try {
+            String nazv = Book.getNazvanie(index, bazaKnig);
+            String avtor = Book.getAvtor(index, bazaKnig);
+            knigiNaRukah.add(index); // делаем запись в список книг на руках
+            Book.bookTake(index, bazaKnig); // делаем запись в БД книг
+            System.out.println("Читатель " + nameReader + " взял книгу " + nazv + " авт. " + avtor);
+        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
+        }
     }
 
     //////// перепиши в соотв с замечаниями выше по takeBook()
@@ -60,19 +65,22 @@ public class Reader {
 
 
     public void printReader(List<Book> bazaKnig){ /////// вывод на печать через единую команду в терминале!
-        //Reader theReader = bazaReaders.get(readerNumber);
-        System.out.println("Справка о клиенте: "+theBiblioteka+". Читатель "+nameReader+ " "+yearBirth +
-                " г.р., читательский билет №" + numberBileta+", тел.: "+ phoneNumber);
-        if (knigiNaRukah.size() > 0) {
-            System.out.print("На руках у читателя книги: ");
-            String nazvanie;
-            for (int i = 0; i < knigiNaRukah.size() - 1; i++) {
-                nazvanie = Book.getNazvanie(knigiNaRukah.get(i), bazaKnig);
-                System.out.print(nazvanie + ", ");
-            }
-            nazvanie = Book.getNazvanie(knigiNaRukah.get(knigiNaRukah.size() - 1), bazaKnig);
-            System.out.println(nazvanie + "."); // печатаем последнюю книгу
-        } else System.out.println("У читателя нет книг на руках");
+        try {
+            System.out.println("Справка о клиенте: " + theBiblioteka + ". Читатель " + nameReader + " " + yearBirth +
+                    " г.р., читательский билет №" + numberBileta + ", тел.: " + phoneNumber);
+            if (knigiNaRukah.size() > 0) {
+                System.out.print("На руках у читателя книги: ");
+                String nazvanie;
+                for (int i = 0; i < knigiNaRukah.size() - 1; i++) {
+                    nazvanie = Book.getNazvanie(knigiNaRukah.get(i), bazaKnig);
+                    System.out.print(nazvanie + ", ");
+                }
+                nazvanie = Book.getNazvanie(knigiNaRukah.get(knigiNaRukah.size() - 1), bazaKnig);
+                System.out.println(nazvanie + "."); // печатаем последнюю книгу
+            } else System.out.println("У читателя нет книг на руках");
+        } catch (Exception e) {
+            System.out.println("Возникла ошибка при чтении базы данных");
+        }
     }
 
     public static List<Reader> bazaReadersDownload(){
@@ -110,7 +118,7 @@ return bazaReaders;
     public static List<Reader> downloadReadersBin (){
         List bazaReader = new <Reader> ArrayList();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("readers.bin"))){
-            bazaReader.add((List)obj.readObject());
+            bazaReader=(List<Reader>)obj.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("Ошибка при загрузке БД читателей: файл не найден");
         } catch (IOException e) {

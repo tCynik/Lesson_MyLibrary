@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -16,37 +17,25 @@ import java.util.ArrayList;
 
 //// исправить ошибки при записи/чтении bin
 public class Start {
-    public static void main (String[] args) {
+    public static void main (String[] args) throws IOException, ClassNotFoundException {
         List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
         List<Reader> bazaReaders = Reader.bazaReadersDownload();
 
+        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+
         Reader.uploadReadersBin(bazaReaders);
         bazaReaders.clear();
+        bazaReaders=Reader.downloadReadersBin();
 
-        Reader.downloadReadersBin();
 
 
-        /////////////// снести в метод
-        try { bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
-        } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
+        bazaReaders.get(2).printReader( bazaKnig);
 
-        try { bazaReaders.get(2).printReader( bazaKnig);
-        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных");}
+        bazaReaders.get(2).bookTake(4, bazaKnig);
 
-        try { bazaReaders.get(2).bookTake(4, bazaKnig);
-        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");}
-
-        try { bazaReaders.get(2).printReader( bazaKnig);
-        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных");}
-
-        ///////////////// там же читателям присваивать String через запятую с долгами книг, и дальше записывать долги
+        ///////////////// В читателях книги на руках и в книгах - у кого на руках: данные ссылочного типа на конкретный
+        /////////////////     экземпляр книги/читателя
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса
-
-        //Reader reader2 = new Reader("Семен Васильев", 1979,2, "493722");
-        //reader2.dolgiPastLoad("1984", bazaKnig);
-
-        //reader1.print(bazaKnig); // отсылка к интерфейсу
-        //reader2.print(bazaKnig);
 
         //////////// допили операции возврата и взятия книги:
         //////////// раньше все книги хранились как отдельные объекты, теперь как коллекция
