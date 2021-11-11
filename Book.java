@@ -1,10 +1,9 @@
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Book  {
+public class Book implements Serializable {
     String naznachenie;
     private String nazvanie;
     private String avtor;
@@ -101,6 +100,30 @@ public class Book  {
             String[] dannie = theLine.split(", "); // делим запятой строчку на отдельные параметры
             int skolkoKnig =Integer.parseInt(dannie[2]); // переводим в int информацию о количестве книг эого экземпляра
             bazaKnig.add(new Book(dannie[0], dannie[1], skolkoKnig)); // добавляем параметры в ArrayList
+        }
+        return bazaKnig;
+    }
+
+    public static void uploadBooksBin (List<Book> bazaKnig) { // Writing the book's database into the books.bin
+        try (ObjectOutputStream obj = new ObjectOutputStream(new FileOutputStream("books.bin"))) {
+            obj.writeObject(bazaKnig);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Book> downloadBooksBin () {
+        List<Book> bazaKnig = new ArrayList();
+        try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("books.bin"))) {
+            bazaKnig = (List<Book>)obj.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
         return bazaKnig;
     }

@@ -2,6 +2,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * ---=== The main commands in the programm ===---
@@ -18,20 +19,66 @@ import java.util.ArrayList;
 //// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
-        List<Book> bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла
-        List<Reader> bazaReaders = Reader.bazaReadersDownload();
+        List<Book> bazaKnig = new ArrayList();
+        bazaKnig = Book.downloadBooksBin();
 
-        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+        List<Reader> bazaReaders = new ArrayList();
+        bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
 
-        Reader.uploadReadersBin(bazaReaders);
-        bazaReaders.clear();
-        bazaReaders=Reader.downloadReadersBin();
+        // main menu
+        System.out.println("Программа <<Билиотекарь>> запущена. Ввудите команду.");
+        System.out.println("команда <<help>> - помощь");
+        boolean flag = true;
+        while (flag) {
+            String command;
+            System.out.print("_");
+            Scanner scan = new Scanner(System.in);
+            command = scan.nextLine();
+            switch (command) {
+                case "help":
+                    Commands.help();
+                    break;
+                case "books":
+                    allBooks(bazaKnig);
+                    break;
+                case "savebooks":
+                    Book.uploadBooksBin(bazaKnig);
+                    System.out.println("база книг в картотеке сохранена");
+                    break;
+                case "readers":
+                    //////// вывести всех читателей
+                    bazaReaders.get(2).printReader( bazaKnig);
+                    break;
+                case "savereaders":
+                    Reader.uploadReadersBin(bazaReaders);
+                    System.out.println("база читателей в картотеке сохранена");
+                    break;
+                case "exit":
+                    System.out.println("Программа закрывается, хорошего дня");
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("Введена неверная команда, проверьте ввод");
+            }
+        }
 
 
 
-        bazaReaders.get(2).printReader( bazaKnig);
 
-        bazaReaders.get(2).bookTake(4, bazaKnig);
+
+        //bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
+        //Book.uploadBooksBin(bazaKnig);
+
+        //Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
+
+        //bazaReaders.get(2).bookTake(4, bazaKnig);
+        //bazaReaders = Reader.bazaReadersDownload(); // загрузка базы читателей из TXT
+        //bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+
+
+
+
+
 
         ///////////////// В читателях книги на руках и в книгах - у кого на руках: данные ссылочного типа на конкретный
         /////////////////     экземпляр книги/читателя
@@ -52,8 +99,7 @@ public class Start {
 // выводим список книг из нашей библиотеки - временно закомментим
         //allBooks(bazaKnig); //
     }
-
-    //////////// вызов списка всех книг
+    // вызов списка всех книг
     public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
         System.out.println("Книги в библиотеке:");
         int num = 1;

@@ -42,6 +42,7 @@ public class Reader implements Serializable {
             knigiNaRukah.add(index); // делаем запись в список книг на руках
             Book.bookTake(index, bazaKnig); // делаем запись в БД книг
             System.out.println("Читатель " + nameReader + " взял книгу " + nazv + " авт. " + avtor);
+
         } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
         }
     }
@@ -116,9 +117,9 @@ return bazaReaders;
     }
 
     public static List<Reader> downloadReadersBin (){
-        List bazaReader = new <Reader> ArrayList();
+        List bazaReaders = new <Reader> ArrayList();
         try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("readers.bin"))){
-            bazaReader=(List<Reader>)obj.readObject();
+            bazaReaders=(List<Reader>)obj.readObject();
         } catch (FileNotFoundException e) {
             System.out.println("Ошибка при загрузке БД читателей: файл не найден");
         } catch (IOException e) {
@@ -126,6 +127,6 @@ return bazaReaders;
         } catch (ClassNotFoundException e) {
             System.out.println("Ошибка при загрузке БД читателей: Не найден класс");
         }
-        return bazaReader;
+        return bazaReaders;
     }
 }
