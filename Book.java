@@ -47,10 +47,6 @@ public class Book implements Serializable {
         bazaKnig.set(index, theKniga); // изменяем параметр количества и перезаисываем в нашем массиве
     }
 
-    int skolkoKnig () {
-        return kolichestvo;
-    }
-
     public static String getNazvanie(int index, List<Book> bazaKnig){
         String nazvKnigi = bazaKnig.get(index).nazvanie;
         return nazvKnigi;

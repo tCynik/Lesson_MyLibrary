@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Reader implements Serializable {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
-    private transient int numberBileta; // номера ранее выданных билетов
+    private int numberBileta; // номера ранее выданных билетов
     private final int yearBirth;
     private String phoneNumber;
     //////////////////// перепиши на массив с перечислением индексов книг, которые на руках
@@ -47,6 +47,18 @@ public class Reader implements Serializable {
         }
     }
 
+    void bookPut(int numKnigi, List<Book> bazaKnig){
+        try {
+            String nazv = Book.getNazvanie(numKnigi, bazaKnig);
+            String avtor = Book.getAvtor(numKnigi, bazaKnig);
+            knigiNaRukah.add(numKnigi); // делаем запись в список книг на руках
+            Book.bookTake(numKnigi, bazaKnig); // делаем запись в БД книг
+            System.out.println("Читатель " + nameReader + " вернул книгу " + nazv + " авт. " + avtor);
+        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
+        }
+    }
+
+
     //////// перепиши в соотв с замечаниями выше по takeBook()
     /*
     void retutnBook(Book book){ // вернул книгу - пишем название книги
@@ -62,10 +74,17 @@ public class Reader implements Serializable {
 
      */
 
-    /////////// добавить метод "вывести всех читателей"
+    public static void allReaders(List<Reader> bazaReaders) { // вывод списка всех читателей
+        bazaReaders.size();
+        for (Reader theReader : bazaReaders) {
+            int numOfBooks = theReader.knigiNaRukah.size();
+            System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
+                    " на руках "+numOfBooks+" книг");
+        }
 
+    }
 
-    public void printReader(List<Book> bazaKnig){ /////// вывод на печать через единую команду в терминале!
+    public void printReader(List<Book> bazaKnig){ // вывод на печать конкретного читателя
         try {
             System.out.println("Справка о клиенте: " + theBiblioteka + ". Читатель " + nameReader + " " + yearBirth +
                     " г.р., читательский билет №" + numberBileta + ", тел.: " + phoneNumber);

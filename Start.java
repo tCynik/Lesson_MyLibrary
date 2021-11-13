@@ -20,18 +20,24 @@ import java.util.Scanner;
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
         List<Book> bazaKnig = new ArrayList();
+        //bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
+        //Book.uploadBooksBin(bazaKnig);
         bazaKnig = Book.downloadBooksBin();
 
         List<Reader> bazaReaders = new ArrayList();
+        //bazaReaders = Reader.bazaReadersDownload();
         bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
+        //bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+
+        Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
 
         // main menu
-        System.out.println("Программа <<Билиотекарь>> запущена. Ввудите команду.");
-        System.out.println("команда <<help>> - помощь");
+        System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
         boolean flag = true;
         while (flag) {
-            String command;
+            System.out.println("команда <<help>> - помощь");
             System.out.print("_");
+            String command;
             Scanner scan = new Scanner(System.in);
             command = scan.nextLine();
             switch (command) {
@@ -46,8 +52,12 @@ public class Start {
                     System.out.println("база книг в картотеке сохранена");
                     break;
                 case "readers":
-                    //////// вывести всех читателей
-                    bazaReaders.get(2).printReader( bazaKnig);
+                    Reader.allReaders(bazaReaders);
+                    System.out.println("Выберите читателя по номеру билета");
+                    System.out.print("_");
+                    Scanner scanRead = new Scanner (System.in);
+                    int num = scan.nextInt();
+                    bazaReaders.get(num-1).printReader(bazaKnig);
                     break;
                 case "savereaders":
                     Reader.uploadReadersBin(bazaReaders);
@@ -61,13 +71,7 @@ public class Start {
                     System.out.println("Введена неверная команда, проверьте ввод");
             }
         }
-
-
-
-
-
-        //bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
-        //Book.uploadBooksBin(bazaKnig);
+        
 
         //Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
 
@@ -96,8 +100,6 @@ public class Start {
 /////////////// для чего в классе Book создать метод, принимающий на вход параметры книги, и возвращающий
 /////////////// объект книгу, записанную в нашу коллекцию. ТАКОЕ ВОЗМОЖНО?????!!!
 
-// выводим список книг из нашей библиотеки - временно закомментим
-        //allBooks(bazaKnig); //
     }
     // вызов списка всех книг
     public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
