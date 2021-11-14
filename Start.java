@@ -45,7 +45,7 @@ public class Start {
                     Commands.help();
                     break;
                 case "books":
-                    allBooks(bazaKnig);
+                    Book.allBooks(bazaKnig);
                     break;
                 case "savebooks":
                     Book.uploadBooksBin(bazaKnig);
@@ -80,10 +80,6 @@ public class Start {
         //bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
 
-
-
-
-
         ///////////////// В читателях книги на руках и в книгах - у кого на руках: данные ссылочного типа на конкретный
         /////////////////     экземпляр книги/читателя
         // класс читатель - 2 потомка подкласса - взрослый или ребенок. Взрослому № телефона, ребенку - № класса
@@ -102,15 +98,15 @@ public class Start {
 
     }
     // вызов списка всех книг
-    public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
-        System.out.println("Книги в библиотеке:");
-        int num = 1;
-        for (Book theBook: bazaKnig) {
-            System.out.print(num+" ");
-            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
-            num++;
-        }
-    }
+//    public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
+//        System.out.println("Книги в библиотеке:");
+//        int num = 1;
+//        for (Book theBook: bazaKnig) {
+//            System.out.print(num+" ");
+//            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
+//            num++;
+//        }
+//    }
 
     /*
     public static void dolgiInput(Reader reader, String dolgChit, List<Book> bazaKnig){ // метод интеграции старых долгов читателя

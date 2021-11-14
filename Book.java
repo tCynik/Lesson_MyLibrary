@@ -69,7 +69,18 @@ public class Book implements Serializable {
         return nameAvtor;
     }
 
-////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
+    public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
+        System.out.println("Книги в библиотеке:");
+        int num = 1;
+        for (Book theBook: bazaKnig) {
+            System.out.print(num+" ");
+            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
+            num++;
+        }
+    }
+
+
+    ////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
     public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
         int indexBook = getIndex(nazvanie, bazaKnig);
         Book theBook = (Book) bazaKnig.get(indexBook);
