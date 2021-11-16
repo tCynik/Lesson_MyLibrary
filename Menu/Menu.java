@@ -24,21 +24,21 @@ public class Menu {
         }
     }
 
-    public String menuInput() {
-        String command= null;
+    public String[] menuInput() {
         Scanner scan = new Scanner(System.in);
-        command = scan.nextLine();
+        String commandLine = scan.nextLine();
+        String[] command = commandLine.split(" ");
         return command;
     }
 
-    public boolean menuSorting(String command) {
+    public boolean menuSorting(String[] command) {
         return true;}
 
     public void menuCycle(Menu menu) {
         boolean flag = true;
         while (flag) {
             menu.showMenuAdress();
-            String command = menu.menuInput();
+            String[] command = menu.menuInput();
             flag = menu.menuSorting(command);
         }
         showMenuName();
@@ -51,7 +51,8 @@ public class Menu {
     public void menuExit() {
         System.out.println("Вы уверены что хотите выйти?");
         System.out.print("Для выхода нажмите <<y>>, для отмены любую клавишу _");
-        if (menuInput().equals("y")) {
+        String[] command = menuInput();
+        if (command[0].equals("y")) {
             System.out.println("Работа программы завершена. Всего хорошего!");
             System.exit(0);
         }
@@ -59,7 +60,8 @@ public class Menu {
 
     public boolean menuUp() {
         return false;
+//        List<Book> list = new ArrayList();
+//        Reader reader = new Reader("aede", 3, 4, "sfsd");
     }
-
 
 }

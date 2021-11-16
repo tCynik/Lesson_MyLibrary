@@ -14,9 +14,9 @@ public class MainMenu extends Menu{
         this.menuOptions = optoins;
     }
 
-    public boolean menuSorting (String command){
+    public boolean menuSorting (String[] command){
         boolean flag = true;
-        switch (command) {
+        switch (command[0]) {
             case "help":
                 showMenuOptions();
                 break;

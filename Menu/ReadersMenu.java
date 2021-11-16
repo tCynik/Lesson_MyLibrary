@@ -1,5 +1,8 @@
 package Menu;
 
+import java.io.Reader;
+import java.util.List;
+
 public class ReadersMenu extends Menu {
     String adress = "Главное меню\\Читатели\\_";
     String name = "---=== Меню БД читателей ===---";
@@ -16,13 +19,17 @@ public class ReadersMenu extends Menu {
         this.menuOptions = optoins;
     }
 
-    public boolean menuSorting (String command){
+    public boolean menuSorting (String[] command){
         boolean flag = true;
-        switch (command) {
+        switch (command[0]) {
             case "help":
                 showMenuOptions();
                 break;
             case "list":
+                ///////// читаем базу, вызываем метод alldeaders
+                List baza = Memorise.bazaReadersDownload();
+            ///утро case
+            ///////// делаем вариант выбрать пользователя reader +" "+#читателя, переходим в подменю с вызовом конк читатея
 
             case "readers":
                 System.out.println("view readers");

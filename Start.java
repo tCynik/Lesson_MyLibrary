@@ -7,15 +7,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * ---=== The main commands in the programm ===---
- * create the list of the Readers from TXT (first start option) ___________ Reader.bazareadersDownload();
- * create the list of the Books from TXT (first start option) _____________ Book.bazaKnigDownload();
- * download any reader's information from the past using __________________ bazaReaders.get('#Reader').dolgiPastLoad("nameOfBook",");
- * upload total reader's information ito the prog. permanent memory _______ Reader.uploadReadersBin(bazaReaders);
- * download  total reader's information from the prog. permanent memory ___ Reader.downloadReadersBin();
- * download any books information from the TXT (first start option)
- * upload total books information ito the prog. permanent memory
- * download  total books information from the prog. permanent memory
+ * разобраться с передачей методов между пакетами и модиф. доступа
+ * использовать единые методы для чтения базы
  */
 
 //// исправить ошибки при записи/чтении bin
@@ -68,13 +61,10 @@ public class Start {
         boolean flag = true;
         while (flag) {
             menu.showMenuAdress();
-            String command = menu.menuInput();
+            String[] command;
+            command = menu.menuInput();
             flag = menu.menuSorting(command);
         }
     }
-    public static void listReaders (){
-        Reader.allReaders(bazaReaders());
-    }
-
 }
 
