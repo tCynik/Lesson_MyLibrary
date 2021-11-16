@@ -1,3 +1,5 @@
+import Menu.MainMenu;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
@@ -20,56 +22,22 @@ import java.util.Scanner;
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
         List<Book> bazaKnig = new ArrayList();
-        //bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
-        //Book.uploadBooksBin(bazaKnig);
-        bazaKnig = Book.downloadBooksBin();
+        bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
+        Book.uploadBooksBin(bazaKnig);
+        //bazaKnig = Book.downloadBooksBin();
 
         List<Reader> bazaReaders = new ArrayList();
-        //bazaReaders = Reader.bazaReadersDownload();
-        bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
-        //bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+        bazaReaders = Reader.bazaReadersDownload();
+        //bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
+        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
         Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
 
         // main menu
+        Menu.MainMenu menu = new Menu.MainMenu();
         System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
-        boolean flag = true;
-        while (flag) {
-            System.out.println("команда <<help>> - помощь");
-            System.out.print("_");
-            String command;
-            Scanner scan = new Scanner(System.in);
-            command = scan.nextLine();
-            switch (command) {
-                case "help":
-                    Commands.help();
-                    break;
-                case "books":
-                    Book.allBooks(bazaKnig);
-                    break;
-                case "savebooks":
-                    Book.uploadBooksBin(bazaKnig);
-                    System.out.println("база книг в картотеке сохранена");
-                    break;
-                case "readers":
-                    Reader.allReaders(bazaReaders);
-                    System.out.println("Выберите читателя по номеру билета");
-                    System.out.print("_");
-                    Scanner scanRead = new Scanner (System.in);
-                    int num = scan.nextInt();
-                    bazaReaders.get(num-1).printReader(bazaKnig);
-                    break;
-                case "savereaders":
-                    Reader.uploadReadersBin(bazaReaders);
-                    System.out.println("база читателей в картотеке сохранена");
-                    break;
-                case "exit":
-                    System.out.println("Программа закрывается, хорошего дня");
-                    flag = false;
-                    break;
-                default:
-                    System.out.println("Введена неверная команда, проверьте ввод");
-            }
+        menu.showMenuName();
+        menuCycle(menu);
         }
         
 
@@ -96,31 +64,17 @@ public class Start {
 /////////////// для чего в классе Book создать метод, принимающий на вход параметры книги, и возвращающий
 /////////////// объект книгу, записанную в нашу коллекцию. ТАКОЕ ВОЗМОЖНО?????!!!
 
-    }
-    // вызов списка всех книг
-//    public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
-//        System.out.println("Книги в библиотеке:");
-//        int num = 1;
-//        for (Book theBook: bazaKnig) {
-//            System.out.print(num+" ");
-//            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
-//            num++;
-//        }
-//    }
-
-    /*
-    public static void dolgiInput(Reader reader, String dolgChit, List<Book> bazaKnig){ // метод интеграции старых долгов читателя
-        String[] slova; // массив с именами книг долгов
-        String razdel = ", ";
-        slova = dolgChit.split(razdel);
-        int[] dolgiIndexes = new int[slova.length]; // массив под индексы книг у читателя по старым долгам
-        for (int i =0; i < slova.length; i++){
-            dolgiIndexes[i] = Book.getIndex(slova[i], bazaKnig); // получаем индекс книги из метода в Book
+    public static void menuCycle(MainMenu menu) {
+        boolean flag = true;
+        while (flag) {
+            menu.showMenuAdress();
+            String command = menu.menuInput();
+            flag = menu.menuSorting(command);
         }
-        reader.zapisDolga(dolgiIndexes); // записываем читателю его долги по индексам книг из базы
     }
-
-     */
+    public static void listReaders (){
+        Reader.allReaders(bazaReaders());
+    }
 
 }
 
