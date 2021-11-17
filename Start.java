@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Storages.*;
 
 /**
  * разобраться с передачей методов между пакетами и модиф. доступа
@@ -14,17 +15,17 @@ import java.util.Scanner;
 //// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
-        List<Book> bazaKnig = new ArrayList();
-        bazaKnig = Book.bazaKnigDownload(); // массив книг берем из файла TXT
-        Book.uploadBooksBin(bazaKnig);
+        List<Storages.Book> bazaKnig = new ArrayList();
+        bazaKnig = Storages.Book.bazaKnigDownload(); // массив книг берем из файла TXT
+        Storages.Book.uploadBooksBin(bazaKnig);
         //bazaKnig = Book.downloadBooksBin();
 
-        List<Reader> bazaReaders = new ArrayList();
-        bazaReaders = Reader.bazaReadersDownload();
+        List<Storages.Reader> bazaReaders = new ArrayList();
+        bazaReaders = Storages.Reader.bazaReadersDownload();
         //bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
         bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
-        Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
+        Storages.Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
 
         // main menu
         Menu.MainMenu menu = new Menu.MainMenu();

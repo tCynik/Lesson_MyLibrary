@@ -20,7 +20,8 @@ public class Memorise {
                 int yearBirth = Integer.parseInt(pole[1]);
                 count++;
                 int numberBileta = count;
-                //bazaReaders.add(new Reader(pole[0], yearBirth, numberBileta, pole[2] ));
+                //Reader reader = new Reader(pole[0], yearBirth, numberBileta, pole[2]);
+                //bazaReaders.add(reader);
             }
         } catch (FileNotFoundException e) {
             System.out.println("Файл не найден. База данных по читателям пуста.");

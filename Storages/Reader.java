@@ -1,6 +1,6 @@
+package Storages;
+
 import java.io.*;
-import java.sql.SQLOutput;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,7 +24,7 @@ public class Reader implements Serializable {
 ///////// вывод сообщения: Удаление читателя "ФИО" невозможно: у читателя не возвращены книги: "перечисление книг"
 /////////   на будущее сделать отдельную базу для бывших читателей (при удалении)
 
-    void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
+    public void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
         try {
             String[] knigiArray = knigi.split(", ");
             for (String theKniga : knigiArray) {

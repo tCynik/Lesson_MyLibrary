@@ -45,7 +45,8 @@ public class Menu {
     }
 
         public void menuWrongOption() {
-        System.out.println("Неверная команда! Повторите ввод");
+        System.out.println("Неверная команда! Повторите ввод.");
+        System.out.println(" Для просмотра доступных команд введите <<help>>");
     }
 
     public void menuExit() {
@@ -60,8 +61,6 @@ public class Menu {
 
     public boolean menuUp() {
         return false;
-//        List<Book> list = new ArrayList();
-//        Reader reader = new Reader("aede", 3, 4, "sfsd");
     }
 
 }
