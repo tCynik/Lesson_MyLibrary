@@ -9,10 +9,11 @@ public class ReadersMenu extends Menu {
     String name = "---=== Меню БД читателей ===---";
     String[] optoins = {"<<help>> ________ показать возможные действия",
                         "<<list>> ________ показать список читателей",
+                        "<<reader _________ вывести читателя с заданным номером>>", // тут взять/вернуть книгу
             //"<<books>> _______ работа с БД книг",
-            //"<<readers>> _____ работа с БД читателей",
-                       "<<up>> __________ выход в главное меню",
-                       "<<exit>> ________ выход из программы"};
+                        "<<baza>> _____ работа с БД читателей", // тут выгрузка, сохранение базы, и т.д.
+                        "<<up>> __________ выход в главное меню",
+                        "<<exit>> ________ выход из программы"};
 
     public ReadersMenu(){
         this.menuAdress = adress;
@@ -27,20 +28,15 @@ public class ReadersMenu extends Menu {
                 showMenuOptions();
                 break;
             case "list":
-                Storages.Reader.allReaders(Storages.Reader.downloadReadersBin());
+                System.out.println("Список читателей библиотеки:");
+                listReaders();
                 break;
-            ///утро case
-            ///////// делаем вариант выбрать пользователя reader +" "+#читателя, переходим в подменю с вызовом конк читатея
             case "reader":
-                if (command.length<2) {
-                    System.out.print("Введите номер читателя_");
-                    Scanner scan = new Scanner(System.in);
-                    int num = scan.nextInt();
-                    //////////// Вывод не работает
-                    Storages.Reader.downloadReadersBin().get(Integer.parseInt(String.valueOf(num)));
-                } else Storages.Reader.downloadReadersBin().get(Integer.parseInt(command[1]));
+                if (command.length < 2) chooseReader();
+                else chooseReaderNum (command[1]);
                 break;
-            case "readers":
+            case "view":
+                //viewReaders();
                 System.out.println("view readers");
                 break;
             case "up":

@@ -136,21 +136,4 @@ public class Book implements Serializable {
         }
         return bazaKnig;
     }
-
-}
-
-class VzrosBook extends Book {
-    public VzrosBook (String nazvanie, String avtor, int kolichestvo){
-        super(nazvanie, avtor, kolichestvo);
-        naznachenie = "том";
-    }
-}
-
-class DetsBook extends Book {
-    public DetsBook (String nazvanie, String avtor, int kolichestvo){
-        super(nazvanie, avtor, kolichestvo);
-        naznachenie = "учебник";
-    }
-
-
 }

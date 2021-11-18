@@ -1,5 +1,7 @@
 package Menu;
 
+import java.io.Reader;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -44,7 +46,32 @@ public class Menu {
         showMenuName();
     }
 
-        public void menuWrongOption() {
+    public void listReaders () {
+        Storages.Reader.allReaders();
+    }
+
+    public void chooseReader () {
+        System.out.print("Введите номер читателя_");
+        Scanner scan = new Scanner(System.in);
+        int numString = scan.nextInt();
+        int num = Integer.parseInt(String.valueOf(numString));
+        List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
+        Storages.Reader theReader = bazaReaders.get(num);
+//////// сейчас будет костыль. Переписать Reader и Book так чтобы не передавать туда базу каждый раз - нехай тянут сами
+        List<Storages.Book> bazaKnig = Storages.Book.downloadBooksBin();
+        theReader.printReader(bazaKnig);
+    }
+
+    public void chooseReaderNum (String numString) {
+        int num = Integer.parseInt(String.valueOf(numString));
+        List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
+        Storages.Reader theReader = bazaReaders.get(num);
+//////// сейчас будет костыль. Переписать Reader и Book так чтобы не передавать туда базу каждый раз - нехай тянут сами
+        List<Storages.Book> bazaKnig = Storages.Book.downloadBooksBin();
+        theReader.printReader(bazaKnig);
+    }
+
+    public void menuWrongOption() {
         System.out.println("Неверная команда! Повторите ввод.");
         System.out.println(" Для просмотра доступных команд введите <<help>>");
     }

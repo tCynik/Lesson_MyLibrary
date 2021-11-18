@@ -28,6 +28,10 @@ public class MainMenu extends Menu{
             case "books":
                 System.out.println("view books");
                 break;
+            case "reader":
+                if (command.length < 2) chooseReader();
+                else chooseReaderNum (command[1]);
+                break;
             case "exit":
                 menuExit();
             default:

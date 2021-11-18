@@ -74,14 +74,14 @@ public class Reader implements Serializable {
 
      */
 
-    public static void allReaders(List<Reader> bazaReaders) { // вывод списка всех читателей
+    public static void allReaders() { // вывод списка всех читателей
+        List<Reader> bazaReaders = downloadReadersBin();
         bazaReaders.size();
         for (Reader theReader : bazaReaders) {
             int numOfBooks = theReader.knigiNaRukah.size();
             System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
                     " на руках "+numOfBooks+" книг");
         }
-
     }
 
     public void printReader(List<Book> bazaKnig){ // вывод на печать конкретного читателя
