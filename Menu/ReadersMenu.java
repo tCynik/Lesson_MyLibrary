@@ -9,7 +9,7 @@ public class ReadersMenu extends Menu {
     String name = "---=== Меню БД читателей ===---";
     String[] optoins = {"<<help>> ________ показать возможные действия",
                         "<<list>> ________ показать список читателей",
-                        "<<reader _________ вывести читателя с заданным номером>>", // тут взять/вернуть книгу
+                        "<<reader>> ______ вывести читателя с заданным номером>>", // тут взять/вернуть книгу
             //"<<books>> _______ работа с БД книг",
                         "<<baza>> _____ работа с БД читателей", // тут выгрузка, сохранение базы, и т.д.
                         "<<up>> __________ выход в главное меню",
@@ -32,8 +32,7 @@ public class ReadersMenu extends Menu {
                 listReaders();
                 break;
             case "reader":
-                if (command.length < 2) chooseReader();
-                else chooseReaderNum (command[1]);
+                chooseReader(command);
                 break;
             case "view":
                 //viewReaders();

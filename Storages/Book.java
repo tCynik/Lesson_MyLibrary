@@ -20,6 +20,10 @@ public class Book implements Serializable {
         this.kolichestvo = kolichestvo;
     }
 
+    public String getNazvanie(){
+        return nazvanie;
+    }
+
     public static void bookTakeHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // записываем ID держателя книги
         Book theKniga = (Book) bazaKnig.get(indexBook);
         theKniga.bookHolders.add(indexHolder);

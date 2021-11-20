@@ -1,5 +1,7 @@
 package Menu;
 
+import java.util.Scanner;
+
 public class MainMenu extends Menu{
     String adress = "Главное меню\\_";
     String name = "---=== Главное меню ===---";
@@ -29,8 +31,7 @@ public class MainMenu extends Menu{
                 System.out.println("view books");
                 break;
             case "reader":
-                if (command.length < 2) chooseReader();
-                else chooseReaderNum (command[1]);
+                chooseReader(command);
                 break;
             case "exit":
                 menuExit();

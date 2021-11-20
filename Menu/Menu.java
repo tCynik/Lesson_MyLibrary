@@ -11,6 +11,10 @@ public class Menu {
 
     public Menu(){}
 
+    public Menu(String command) {
+
+    }
+
     public void showMenuAdress() {
         System.out.print(menuAdress);
     }
@@ -29,6 +33,8 @@ public class Menu {
     public String[] menuInput() {
         Scanner scan = new Scanner(System.in);
         String commandLine = scan.nextLine();
+        commandLine = commandLine.toLowerCase();
+        commandLine = commandLine.trim();
         String[] command = commandLine.split(" ");
         return command;
     }
@@ -50,25 +56,25 @@ public class Menu {
         Storages.Reader.allReaders();
     }
 
-    public void chooseReader () {
-        System.out.print("Введите номер читателя_");
-        Scanner scan = new Scanner(System.in);
-        int numString = scan.nextInt();
-        int num = Integer.parseInt(String.valueOf(numString));
-        List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
-        Storages.Reader theReader = bazaReaders.get(num);
-//////// сейчас будет костыль. Переписать Reader и Book так чтобы не передавать туда базу каждый раз - нехай тянут сами
-        List<Storages.Book> bazaKnig = Storages.Book.downloadBooksBin();
-        theReader.printReader(bazaKnig);
+    public void chooseReader (String[] command) {
+        if (command.length < 2) {
+            System.out.print("Выберите номер читателя_");
+            Scanner scan = new Scanner(System.in);
+            String num = scan.nextLine();
+            chooseReaderNum (num);
+        }
+        else chooseReaderNum (command[1]);
     }
 
     public void chooseReaderNum (String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
+        num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
         List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
         Storages.Reader theReader = bazaReaders.get(num);
-//////// сейчас будет костыль. Переписать Reader и Book так чтобы не передавать туда базу каждый раз - нехай тянут сами
-        List<Storages.Book> bazaKnig = Storages.Book.downloadBooksBin();
-        theReader.printReader(bazaKnig);
+        // выбираем конкретного читателя - заходим в его меню.
+        ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
+        menu.showMenuName();
+        menuCycle(menu);
     }
 
     public void menuWrongOption() {
