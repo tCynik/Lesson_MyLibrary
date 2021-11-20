@@ -1,10 +1,6 @@
 package Menu;
 
-import java.io.Reader;
-import java.util.List;
-import java.util.Scanner;
-
-public class ReadersMenu extends Menu {
+public class ReadersMenu extends Menu implements InterfaceMenu{
     String adress = "Главное меню\\Читатели\\_";
     String name = "---=== Меню БД читателей ===---";
     String[] optoins = {"<<help>> ________ показать возможные действия",
@@ -29,10 +25,10 @@ public class ReadersMenu extends Menu {
                 break;
             case "list":
                 System.out.println("Список читателей библиотеки:");
-                listReaders();
+                list();
                 break;
             case "reader":
-                chooseReader(command);
+                enterReaderNumber(command);
                 break;
             case "view":
                 //viewReaders();
@@ -48,4 +44,10 @@ public class ReadersMenu extends Menu {
         }
         return flag;
     }
+
+    @Override
+    public void list() {
+        Storages.Reader.showAll();
+    }
+
 }

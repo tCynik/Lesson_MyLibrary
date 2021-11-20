@@ -1,8 +1,5 @@
 package Menu;
 
-import java.io.Reader;
-import java.util.Scanner;
-
 public class ReaderOptionsMenu extends Menu {
     Storages.Reader theReader;
     String adress = "Главное меню\\Читатели\\Меню читателя";
@@ -13,7 +10,7 @@ public class ReaderOptionsMenu extends Menu {
             "<<take>> _________ Читатель взял книгу>>", // тут взять/вернуть книгу
             "<<put>> __________ читатель вернул книгу",
             "<<reader #>> _____ вывести меню читателя #", // тут выгрузка, сохранение базы, и т.д.
-            "<<up>> ___________ выход в главное меню",
+            "<<up>> ___________ выход в меню читателей",
             "<<exit>> _________ выход из программы"};
 
     public ReaderOptionsMenu(Storages.Reader theReader){
@@ -33,11 +30,13 @@ public class ReaderOptionsMenu extends Menu {
                 theReader.printReader();
                 break;
             case "reader":
-                chooseReader(command);
+                enterReaderNumber(command);
                 break;
-            case "view":
-                //viewReaders();
-                System.out.println("view readers");
+            case "take":
+                System.out.println("take the book");
+                break;
+            case "put":
+                System.out.println("put the book");
                 break;
             case "up":
                 flag = menuUp();

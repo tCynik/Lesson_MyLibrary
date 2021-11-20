@@ -24,6 +24,17 @@ public class Book implements Serializable {
         return nazvanie;
     }
 
+    public static void showAll(){ // метод вывода списка всех книг
+        List<Book> bazaKnig = downloadBooksBin();
+        System.out.println("Книги в библиотеке:");
+        int num = 1;
+        for (Book theBook: bazaKnig) {
+            System.out.print(num+" ");
+            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
+            num++;
+        }
+    }
+
     public static void bookTakeHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // записываем ID держателя книги
         Book theKniga = (Book) bazaKnig.get(indexBook);
         theKniga.bookHolders.add(indexHolder);
@@ -75,15 +86,6 @@ public class Book implements Serializable {
         return nameAvtor;
     }
 
-    public static void allBooks(List<Book> bazaKnig){ // метод вывода списка всех книг
-        System.out.println("Книги в библиотеке:");
-        int num = 1;
-        for (Book theBook: bazaKnig) {
-            System.out.print(num+" ");
-            theBook.print(theBook.getNazvanie(num-1, bazaKnig), bazaKnig);
-            num++;
-        }
-    }
 
 
     ////////////////////////////// пилим вывод инфо по книге. На вводе: название, база

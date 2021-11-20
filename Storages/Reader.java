@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Reader implements Serializable, StorageInterface {
+public class Reader implements Serializable {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private int numberBileta; // номера ранее выданных билетов
@@ -61,32 +61,6 @@ public class Reader implements Serializable, StorageInterface {
         } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
         }
     }
-
-    @Override
-    public void showAll() {
-        List<Reader> bazaReaders = downloadReadersBin();
-        bazaReaders.size();
-        for (Reader theReader : bazaReaders) {
-            int numOfBooks = theReader.knigiNaRukah.size();
-            System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
-                    " на руках "+numOfBooks+" книг");
-        }
-    }
-
-    @Override
-    public List<Object> downloadBin() {
-        return null;
-    }
-
-    @Override
-    public List<Object> downloadTxt() {
-        return null;
-    }
-
-    @Override
-    public void uploadBin() {
-
-    }
     //////// перепиши в соотв с замечаниями выше по takeBook()
     /*
     void retutnBook(Book book){ // вернул книгу - пишем название книги
@@ -102,7 +76,7 @@ public class Reader implements Serializable, StorageInterface {
 
      */
 
-    public static void allReaders() { // вывод списка всех читателей
+    public static void showAll() { // вывод списка всех читателей
         List<Reader> bazaReaders = downloadReadersBin();
         bazaReaders.size();
         for (Reader theReader : bazaReaders) {

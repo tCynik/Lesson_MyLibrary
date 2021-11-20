@@ -1,6 +1,5 @@
 package Menu;
 
-import java.io.Reader;
 import java.util.List;
 import java.util.Scanner;
 
@@ -52,21 +51,17 @@ public class Menu {
         showMenuName();
     }
 
-    public void listReaders () {
-        Storages.Reader.allReaders();
-    }
-
-    public void chooseReader (String[] command) {
+    public void enterReaderNumber(String[] command) {
         if (command.length < 2) {
             System.out.print("Выберите номер читателя_");
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
-            chooseReaderNum (num);
+            chooseReader(num);
         }
-        else chooseReaderNum (command[1]);
+        else chooseReader(command[1]);
     }
 
-    public void chooseReaderNum (String numString) {
+    public void chooseReader(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
         List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
