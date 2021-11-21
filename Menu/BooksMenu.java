@@ -1,6 +1,6 @@
 package Menu;
 
-public class BooksMenu extends Menu implements InterfaceMenu{
+public class BooksMenu extends Menu {
     String adress = "Главное меню\\Книги\\_";
     String name = "---=== Меню БД книг ===---";
     String[] optoins = {
@@ -25,7 +25,6 @@ public class BooksMenu extends Menu implements InterfaceMenu{
                 break;
             case "list":
                 System.out.println("Список книг:");
-                list();
                 break;
             case "book":
                 ////// интерфейс в зависимости от того, выбираем ли книгу или читателя
@@ -44,10 +43,5 @@ public class BooksMenu extends Menu implements InterfaceMenu{
                 menuWrongOption();
         }
         return flag;
-    }
-
-    @Override
-    public void list() {
-        Storages.Book.showAll();
     }
 }

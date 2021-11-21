@@ -1,6 +1,9 @@
 package Menu;
 
-public class ReadersMenu extends Menu implements InterfaceMenu{
+import Storages.Manager;
+import Storages.ReaderDataBase;
+
+public class ReadersMenu extends Menu {
     String adress = "Главное меню\\Читатели\\_";
     String name = "---=== Меню БД читателей ===---";
     String[] optoins = {"<<help>> ________ показать возможные действия",
@@ -25,7 +28,8 @@ public class ReadersMenu extends Menu implements InterfaceMenu{
                 break;
             case "list":
                 System.out.println("Список читателей библиотеки:");
-                list();
+                Manager.showAll(Manager.downloadBaseBin(new ReaderDataBase()));
+                //list();
                 break;
             case "reader":
                 enterReaderNumber(command);
@@ -45,9 +49,9 @@ public class ReadersMenu extends Menu implements InterfaceMenu{
         return flag;
     }
 
-    @Override
-    public void list() {
-        Storages.Reader.showAll();
-    }
+//    @Override
+//    public void list() {
+//        Storages.Reader.showAll();
+//    }
 
 }

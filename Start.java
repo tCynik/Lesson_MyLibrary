@@ -16,9 +16,11 @@ import Storages.*;
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
         ReaderDataBase readersData = (ReaderDataBase) Manager.downloadBaseTxt(new ReaderDataBase());
-        Manager.uploadBaseBin(readersData);
-        ReaderDataBase readersData2 = (ReaderDataBase) Manager.downloadBaseBin(new ReaderDataBase());
+        BookDataBase booksData = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
+        Manager.uploadBaseBin(booksData);
 
+        Manager.uploadBaseBin(readersData);
+        Manager.showAll(booksData);
 
 //        List<Storages.Book> bazaKnig = new ArrayList();
 //        bazaKnig = Storages.Book.bazaKnigDownload(); // массив книг берем из файла TXT
@@ -40,11 +42,6 @@ public class Start {
         }
         
 
-        //Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
-
-        //bazaReaders.get(2).bookTake(4, bazaKnig);
-        //bazaReaders = Reader.bazaReadersDownload(); // загрузка базы читателей из TXT
-        //bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
 
         ///////////////// В читателях книги на руках и в книгах - у кого на руках: данные ссылочного типа на конкретный
@@ -72,5 +69,6 @@ public class Start {
             flag = menu.menuSorting(command);
         }
     }
+
 }
 

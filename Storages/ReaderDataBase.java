@@ -24,8 +24,14 @@ public class ReaderDataBase extends Databases {
     }
 
     @Override
-    public void printBase() {
-
+    public void printLine(Object object) {
+        Reader reader = (Reader) object;
+        reader.info();
     }
-
 }
+
+//////// скорректировать сигнатуру методов книг в соответствии с новой структурой
+//////// подчистить классы Book и Reader
+//////// исправть порядок назначения номеров читательских билетов (начало с 0)
+//////// в классе Start верни автозапуск меню
+//////// при загрузке базы из Bin добавлять новые записи далее к предыдущим

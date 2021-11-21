@@ -2,6 +2,7 @@ package Storages;
 /**
  * подпрограмма - менеджер управления базами данных
  * содержит в себе методы для работы с базами данных - обьектами суперкласса Databases(ArrayList)
+ * вынесена из класса start из-за сложности с доступом к методам класса в папке src из вложенных папок :(
  */
 
 import java.io.*;
@@ -22,7 +23,6 @@ public class Manager {
                 String theLine = scan.nextLine();
                 database.add(blancBase.fillFields(count, theLine));
                 count++;
-                int numberBileta = count;
             }
         } catch (FileNotFoundException e) {
             System.out.println("Файл базы данных "+blancBase.toString()+" не найден.");
@@ -56,11 +56,8 @@ public class Manager {
         return database;
     }
 
-    public void showAll1 () { // метод печати всего содержимого вызывается для обьекта суперкласса Databases
-        Databases database = blankDatabase;
-        for (Object base: database) {
-            base.printBase();
-        }
+    public static void showAll (Databases dataBase) { // метод печати всего содержимого вызывается для обьекта суперкласса Databases;
+        dataBase.printBase();
     }
 
 }

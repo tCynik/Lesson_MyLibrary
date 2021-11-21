@@ -37,6 +37,18 @@ public class Book implements Serializable {
         }
     }
 
+    public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
+        int indexBook = getIndex(nazvanie, bazaKnig);
+        Book theBook = (Book) bazaKnig.get(indexBook);
+        System.out.println("Справка об издании: "+naznachenie + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+                + kolichestvo+ " экземпляров, на руках ");
+    }
+
+    public void info(){
+        System.out.println("Справка об издании: "+naznachenie + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+                + kolichestvo+ " экземпляров, на руках ");
+    }
+
     public static void bookTakeHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // записываем ID держателя книги
         Book theKniga = (Book) bazaKnig.get(indexBook);
         theKniga.bookHolders.add(indexHolder);
@@ -89,18 +101,6 @@ public class Book implements Serializable {
     }
 
     ////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
-    public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
-        int indexBook = getIndex(nazvanie, bazaKnig);
-        Book theBook = (Book) bazaKnig.get(indexBook);
-        System.out.println("Справка об издании: "+naznachenie + " "+ nazvanie+", автор "+avtor+", в библиотеке "
-                + kolichestvo+ " экземпляров, на руках ");
-        //int howMuchBooks = 0;
-        //for (:        прокручивсем всех читателей через массив читателей
-        //     ) {      у каждого читателя перебираем список книг на руках в поисках нужного indexBook
-                   //// если indexBook подходящий, прибавляем единицу к howMuchBooks
-
-        //}
-    }
 
     public static List<Book> bazaKnigDownload() {// метод для подгрузки БД книг из файла
         List<Book> bazaKnig = new ArrayList();

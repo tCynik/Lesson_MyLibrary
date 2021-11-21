@@ -62,16 +62,21 @@ public class Reader extends Manager implements Serializable  {
         }
     }
     //////// перепиши в соотв с замечаниями выше по takeBook()
-
-    public static void showAll() { // вывод списка всех читателей
-        List<Reader> bazaReaders = downloadReadersBin();
-        bazaReaders.size();
-        for (Reader theReader : bazaReaders) {
-            int numOfBooks = theReader.knigiNaRukah.size();
-            System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
-                    " на руках "+numOfBooks+" книг");
-        }
+    public void info(){
+        int numOfBooks = knigiNaRukah.size();
+        System.out.println("билет №"+numberBileta+", читатель "+nameReader+
+                " на руках "+numOfBooks+" книг");
     }
+
+//    public static void showAll() { // вывод списка всех читателей
+//        List<Reader> bazaReaders = downloadReadersBin();
+//        bazaReaders.size();
+//        for (Reader theReader : bazaReaders) {
+//            int numOfBooks = theReader.knigiNaRukah.size();
+//            System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
+//                    " на руках "+numOfBooks+" книг");
+//        }
+//    }
 
     public static int indexReaderByNumBileta (int number){ // выбор индекас читател по номеру билета
         int index = 0;
