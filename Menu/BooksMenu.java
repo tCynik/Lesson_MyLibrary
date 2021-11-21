@@ -25,10 +25,10 @@ public class BooksMenu extends Menu implements InterfaceMenu{
                 break;
             case "list":
                 System.out.println("Список книг:");
-                //////////// метод вывода читателей\книг - через интерфейс в рамках единой команды подменю
                 list();
                 break;
-            case "reader":
+            case "book":
+                ////// интерфейс в зависимости от того, выбираем ли книгу или читателя
                 enterReaderNumber(command);
                 break;
             case "view":

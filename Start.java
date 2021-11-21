@@ -15,23 +15,28 @@ import Storages.*;
 //// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
-        List<Storages.Book> bazaKnig = new ArrayList();
-        bazaKnig = Storages.Book.bazaKnigDownload(); // массив книг берем из файла TXT
-        Storages.Book.uploadBooksBin(bazaKnig);
-        //bazaKnig = Book.downloadBooksBin();
+        ReaderDataBase readersData = (ReaderDataBase) Manager.downloadBaseTxt(new ReaderDataBase());
+        Manager.uploadBaseBin(readersData);
+        ReaderDataBase readersData2 = (ReaderDataBase) Manager.downloadBaseBin(new ReaderDataBase());
 
-        List<Storages.Reader> bazaReaders = new ArrayList();
-        bazaReaders = Storages.Reader.bazaReadersDownload();
-        //bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
-        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
 
-        Storages.Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
-
-        // main menu
-        Menu.MainMenu menu = new Menu.MainMenu();
-        System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
-        menu.showMenuName();
-        menuCycle(menu);
+//        List<Storages.Book> bazaKnig = new ArrayList();
+//        bazaKnig = Storages.Book.bazaKnigDownload(); // массив книг берем из файла TXT
+//        Storages.Book.uploadBooksBin(bazaKnig);
+//        //bazaKnig = Book.downloadBooksBin();
+//
+//        List<Storages.Reader> bazaReaders = new ArrayList();
+//        bazaReaders = Storages.Reader.bazaReadersDownload();
+//        //bazaReaders = Reader.downloadReadersBin(); // загрузка читателей из бинарного файла
+//        bazaReaders.get(2).dolgiPastLoad("Мурзилка, Довод, Хоббит", bazaKnig);
+//
+//        Storages.Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
+//
+//        // main menu
+//        Menu.MainMenu menu = new Menu.MainMenu();
+//        System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
+//        menu.showMenuName();
+//        menuCycle(menu);
         }
         
 

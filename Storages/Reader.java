@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Reader implements Serializable {
+public class Reader extends Manager implements Serializable  {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private int numberBileta; // номера ранее выданных билетов
@@ -62,19 +62,6 @@ public class Reader implements Serializable {
         }
     }
     //////// перепиши в соотв с замечаниями выше по takeBook()
-    /*
-    void retutnBook(Book book){ // вернул книгу - пишем название книги
-        String nazv = book.getNazvanie();
-        int bookIndex = knigiNaRukah.indexOf(nazv); // ищем индекс книги в списке
-        for (int i = bookIndex; i < knigiNaRukah.size()-1; i++ ) { // убираем возвращенну книгу, сдвигая слежующие влево
-            knigiNaRukah.set(i, knigiNaRukah.get(i+1));
-        }
-        //knigiNaRukah.set(knigiNaRukah.size()-1, "-=EMPTY=-");
-        System.out.println(nameReader+" возвратил книгу " + book.getNazvanie());
-        book.bookPut();
-    }
-
-     */
 
     public static void showAll() { // вывод списка всех читателей
         List<Reader> bazaReaders = downloadReadersBin();

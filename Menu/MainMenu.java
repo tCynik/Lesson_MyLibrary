@@ -6,6 +6,7 @@ public class MainMenu extends Menu{
     String[] optoins = {"<<help>> ________ показать возможные действия",
                             "<<books>> _______ работа с БД книг",
                             "<<readers>> _____ работа с БД читателей",
+
                             "<<exit>> ________ выход из программы"};
 
     public MainMenu(){
@@ -32,6 +33,9 @@ public class MainMenu extends Menu{
                 break;
             case "reader":
                 enterReaderNumber(command);
+                break;
+            case "book":
+                //enterBookNumber(command);
                 break;
             case "exit":
                 menuExit();

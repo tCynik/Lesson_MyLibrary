@@ -1,22 +1,25 @@
 package Menu;
 
-public class ReaderOptionsMenu extends Menu {
-    Storages.Reader theOne;
-    String adress = "Главное меню\\Читатели\\Меню читателя";
-    String name = "---=== Меню читателя ";
+import Storages.Book;
+
+public class BookOptionsMenu extends Menu {
+    Storages.Book theOne; // сразу создае обьект книги, с которым будем роботать
+    String adress = "Главное меню\\Книги\\Меню издания";
+    String name = "---=== Меню издания ";
     String[] optoins = {
             "<<help>> _________ показать возможные действия",
-            "<<info>> _________ информация о читателе",
-            "<<take>> _________ Читатель взял книгу>>", // тут взять/вернуть книгу
-            "<<put>> __________ читатель вернул книгу",
+            "<<info>> _________ информация о книге",
+            "<<kard>> _________ данные о держателях книги", // тут взять/вернуть книгу
             "<<reader #>> _____ вывести меню читателя #", // тут выгрузка, сохранение базы, и т.д.
-            "<<up>> ___________ выход в меню читателей",
+            "<<come>> _________ поставить на приход книгу",
+            "<<out>> __________ списать книгу",
+            "<<up>> ___________ выход в меню книг",
             "<<exit>> _________ выход из программы"};
 
-    public ReaderOptionsMenu(Storages.Reader theOne){
-        this.theOne = theOne;
-        this.menuAdress = adress + " " + theOne.getNameReader()+"_";
-        this.menuName = name + theOne.getNameReader()+ " ===---";
+    public BookOptionsMenu(Book theBook){
+        this.theOne = theBook;
+        //this.menuAdress = adress + " " + theOne.getNameReader()+"_";
+        //this.menuName = name + theOne.getNameReader()+ " ===---";
         this.menuOptions = optoins;
     }
 
@@ -27,7 +30,7 @@ public class ReaderOptionsMenu extends Menu {
                 showMenuOptions();
                 break;
             case "info":
-                theOne.printReader();
+                //theOne.printReader();
                 break;
             case "reader":
                 enterReaderNumber(command);
@@ -48,5 +51,6 @@ public class ReaderOptionsMenu extends Menu {
         }
         return flag;
     }
+
 
 }

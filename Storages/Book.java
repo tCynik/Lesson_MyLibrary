@@ -6,14 +6,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Book implements Serializable {
-    String naznachenie;
+    private int invNumber; // индивидуальный инвентарный номер книги
+    String naznachenie; ////////////// неакктуальная фича, удалить
     private String nazvanie;
     private String avtor;
-    private transient int kolichestvo = 0;
+    private int kolichestvo = 0; // количество книг, которые в библиотеке
     private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
-    ////////// прикрутить для каждой книги поле - массив с указанием № читательского билета тех, у кого на руках
+    ////////// тут тохраняем ссылки на конеретных читателей (объекты), у кого на руках наша книга
 
-    public Book (String nazvanie, String avtor, int kolichestvo){ // конструктор книги
+    public Book (int invNumber, String nazvanie, String avtor, int kolichestvo){ // конструктор книги
+        this.invNumber = invNumber;
         naznachenie = "книга";
         this.nazvanie = nazvanie;
         this.avtor = avtor;
@@ -80,13 +82,11 @@ public class Book implements Serializable {
         return index;
     }
 
-    public static String getAvtor(int index, List<Book> bazaKnig){
+    public static String getAvtor(int index, List<Book> bazaKnig){ // получаем имя автора по индексу книги
         String nameAvtor;
         nameAvtor=bazaKnig.get(index).avtor;
         return nameAvtor;
     }
-
-
 
     ////////////////////////////// пилим вывод инфо по книге. На вводе: название, база
     public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
@@ -114,7 +114,7 @@ public class Book implements Serializable {
             String theLine = scan1.nextLine(); // записываем построчно содержимое файла
             String[] dannie = theLine.split(", "); // делим запятой строчку на отдельные параметры
             int skolkoKnig =Integer.parseInt(dannie[2]); // переводим в int информацию о количестве книг эого экземпляра
-            bazaKnig.add(new Book(dannie[0], dannie[1], skolkoKnig)); // добавляем параметры в ArrayList
+            bazaKnig.add(new Book(1, dannie[0], dannie[1], skolkoKnig)); // добавляем параметры в ArrayList
         }
         return bazaKnig;
     }
