@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Reader extends Manager implements Serializable  {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
-    private int numberBileta; // номера ранее выданных билетов
+    private int number; // номера ранее выданных билетов
     private final int yearBirth;
     private String phoneNumber;
     //////////////////// перепиши на массив с перечислением индексов книг, которые на руках
@@ -18,7 +18,7 @@ public class Reader extends Manager implements Serializable  {
     public Reader(String name, int year, int number, String phone){ // создаем конструктор. Номера билетов определяются новые
         this.nameReader = name;                      // в случае необходимости добавить нов конструктор с
         this.yearBirth = year;                       // принудительным вводом № билета на случай удаления аккаунта
-        this.numberBileta = number;                              // одного из предыдущих читателей
+        this.number = number;                              // одного из предыдущих читателей
         this.phoneNumber = phone;
 }
 /////////   добавить метод удаления читателей: ФИО: "Удален", книги Null, номер билета Null. Если остаются книги,
@@ -26,6 +26,10 @@ public class Reader extends Manager implements Serializable  {
 /////////   на будущее сделать отдельную базу для бывших читателей (при удалении)
     public String getNameReader(){
         return nameReader;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
@@ -64,8 +68,7 @@ public class Reader extends Manager implements Serializable  {
     //////// перепиши в соотв с замечаниями выше по takeBook()
     public void info(){
         int numOfBooks = knigiNaRukah.size();
-        System.out.println("билет №"+numberBileta+", читатель "+nameReader+
-                " на руках "+numOfBooks+" книг");
+        System.out.println("билет №"+ number +", читатель "+nameReader+ " на руках "+numOfBooks+" книг");
     }
 
 //    public static void showAll() { // вывод списка всех читателей
@@ -78,11 +81,24 @@ public class Reader extends Manager implements Serializable  {
 //        }
 //    }
 
-    public static int indexReaderByNumBileta (int number){ // выбор индекас читател по номеру билета
-        int index = 0;
+    public int indexByNumber (int number) {
+        int index =0;
         List<Reader> bazaReaders = downloadReadersBin();
         for (Reader theReader: bazaReaders) {
-            if (theReader.numberBileta == number){
+            if (theReader.number == number){
+                break;
+            } else index++;
+        }
+        return index;
+    }
+
+    public static int indexReaderByNumBileta (int number){ // выбор индекас читател по номеру билета
+        int index = 0;
+        ReaderDataBase bazaReaders = new ReaderDataBase();
+        ReaderDataBase bazaReaders1 = (ReaderDataBase) downloadBaseBin(bazaReaders);
+        for (Object theReader: bazaReaders1) {
+            Reader reader = (Reader) theReader;
+            if (reader.getNumber() == number){
                 break;
             } else index++;
         }
@@ -92,7 +108,7 @@ public class Reader extends Manager implements Serializable  {
     public void printReader(){ // вывод на печать конкретного читателя
         try {
             System.out.println("Справка о клиенте: " + theBiblioteka + ". Читатель " + nameReader + " " + yearBirth +
-                    " г.р., читательский билет №" + numberBileta + ", тел.: " + phoneNumber);
+                    " г.р., читательский билет №" + number + ", тел.: " + phoneNumber);
             if (knigiNaRukah.size() > 0) {
                 System.out.print("На руках у читателя книги: ");
                 String nazvanie;

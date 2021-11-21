@@ -18,9 +18,16 @@ public class Start {
         ReaderDataBase readersData = (ReaderDataBase) Manager.downloadBaseTxt(new ReaderDataBase());
         BookDataBase booksData = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
         Manager.uploadBaseBin(booksData);
-
         Manager.uploadBaseBin(readersData);
-        Manager.showAll(booksData);
+        //BookDataBase booksData1 = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
+        //booksData1 = (BookDataBase) Manager.downloadBaseBin(new BookDataBase());
+
+        Menu.MainMenu menu = new Menu.MainMenu();
+        System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
+        menu.showMenuName();
+        menuCycle(menu);
+    }
+
 
 //        List<Storages.Book> bazaKnig = new ArrayList();
 //        bazaKnig = Storages.Book.bazaKnigDownload(); // массив книг берем из файла TXT
@@ -34,13 +41,8 @@ public class Start {
 //
 //        Storages.Reader.uploadReadersBin(bazaReaders); // базу по читателям пишем в бинарный файл
 //
-//        // main menu
-//        Menu.MainMenu menu = new Menu.MainMenu();
-//        System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");
-//        menu.showMenuName();
-//        menuCycle(menu);
-        }
-        
+        // main menu
+
 
 
 

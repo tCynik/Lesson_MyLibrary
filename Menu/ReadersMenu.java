@@ -1,7 +1,6 @@
 package Menu;
 
-import Storages.Manager;
-import Storages.ReaderDataBase;
+import Storages.*;
 
 public class ReadersMenu extends Menu {
     String adress = "Главное меню\\Читатели\\_";
@@ -29,14 +28,12 @@ public class ReadersMenu extends Menu {
             case "list":
                 System.out.println("Список читателей библиотеки:");
                 Manager.showAll(Manager.downloadBaseBin(new ReaderDataBase()));
-                //list();
                 break;
             case "reader":
-                enterReaderNumber(command);
+                chooseReader(command);
                 break;
-            case "view":
-                //viewReaders();
-                System.out.println("view readers");
+            case "baza":
+                System.out.println("working with the datbase");
                 break;
             case "up":
                 flag = menuUp();
@@ -49,9 +46,15 @@ public class ReadersMenu extends Menu {
         return flag;
     }
 
-//    @Override
-//    public void list() {
-//        Storages.Reader.showAll();
+//    public static void chooseNumber(String numString) { ////// не взлетело! переносим назад в майнменю, chooseReaderNumber
+//        int num = Integer.parseInt(String.valueOf(numString));
+//        num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
+//        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу //// вроде получается норм
+//        Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
+//        // выбираем конкретного читателя - заходим в его меню.
+//        ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
+//        menu.showMenuName();
+//        menuCycle(menu);
 //    }
 
 }

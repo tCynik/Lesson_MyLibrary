@@ -1,5 +1,10 @@
 package Menu;
 
+import Storages.Databases;
+import Storages.Manager;
+import Storages.Reader;
+import Storages.ReaderDataBase;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -51,25 +56,38 @@ public class Menu {
         showMenuName();
     }
 
-    public void enterReaderNumber(String[] command) {
+    public void chooseReader(String[] command) {
         if (command.length < 2) {
             System.out.print("Выберите номер читателя_");
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
-            chooseReader(num);
+            chooseReaderNumber(num);
         }
-        else chooseReader(command[1]);
+        else chooseReaderNumber(command[1]);
     }
 
-    public void chooseReader(String numString) {
+    public void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
-        List<Storages.Reader> bazaReaders = Storages.Reader.downloadReadersBin();
-        Storages.Reader theReader = bazaReaders.get(num);
+        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
         // выбираем конкретного читателя - заходим в его меню.
         ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
         menu.showMenuName();
         menuCycle(menu);
+    }
+
+    public void enterBookNumber(String[] command) {
+        if (command.length < 2) {
+            System.out.print("Выберите номер книги_");
+            Scanner scan = new Scanner(System.in);
+            String num = scan.nextLine();
+            chooseNumber(num);
+        }
+        else chooseNumber(command[1]);
+    }
+
+    public void chooseNumber(String numString) { // по номеру в команде выбираем конкретную запись
     }
 
     public void menuWrongOption() {

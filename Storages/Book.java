@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Book implements Serializable {
-    private int invNumber; // индивидуальный инвентарный номер книги
+    private int number; // индивидуальный инвентарный номер книги
     String naznachenie; ////////////// неакктуальная фича, удалить
     private String nazvanie;
     private String avtor;
@@ -14,8 +14,8 @@ public class Book implements Serializable {
     private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
     ////////// тут тохраняем ссылки на конеретных читателей (объекты), у кого на руках наша книга
 
-    public Book (int invNumber, String nazvanie, String avtor, int kolichestvo){ // конструктор книги
-        this.invNumber = invNumber;
+    public Book (int number, String nazvanie, String avtor, int kolichestvo){ // конструктор книги
+        this.number = number;
         naznachenie = "книга";
         this.nazvanie = nazvanie;
         this.avtor = avtor;

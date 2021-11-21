@@ -33,7 +33,7 @@ public class BookOptionsMenu extends Menu {
                 //theOne.printReader();
                 break;
             case "reader":
-                enterReaderNumber(command);
+                chooseReader(command);
                 break;
             case "take":
                 System.out.println("take the book");

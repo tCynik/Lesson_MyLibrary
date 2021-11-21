@@ -32,7 +32,7 @@ public class MainMenu extends Menu{
                 menuCycle(newMenu);
                 break;
             case "reader":
-                enterReaderNumber(command);
+                chooseReader(command);
                 break;
             case "book":
                 //enterBookNumber(command);

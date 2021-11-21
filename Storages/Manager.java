@@ -6,6 +6,7 @@ package Storages;
  */
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Manager {
@@ -17,7 +18,7 @@ public class Manager {
     public static Databases downloadBaseTxt (Databases blancBase) {
         Databases database = blancBase;
         File dataFile = new File(blancBase.getBaseAdressTxt());
-        int count = 0;
+        int count = 1;
         try { Scanner scan = new Scanner(dataFile);
             while (scan.hasNextLine()){
                 String theLine = scan.nextLine();
@@ -56,6 +57,14 @@ public class Manager {
         return database;
     }
 
+//    public int indexByNumber (int theNumber, ArrayList<Manager> list) {
+//        for (Manager manager : list) {
+//
+//        }
+//
+//        int index=0;
+//        return index;
+//    }
     public static void showAll (Databases dataBase) { // метод печати всего содержимого вызывается для обьекта суперкласса Databases;
         dataBase.printBase();
     }
