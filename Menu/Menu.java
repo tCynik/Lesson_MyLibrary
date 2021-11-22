@@ -1,9 +1,11 @@
 package Menu;
+/**
+ * Корневой класс структуры меню.
+ * задает общие методы для всех разделов и ярусов меню.
+ * методы, относящиеся к частному случаю, вызяваются в нужном подменю, обрабатываются там, и возвращают результат
+ */
 
-import Storages.Databases;
-import Storages.Manager;
-import Storages.Reader;
-import Storages.ReaderDataBase;
+import Storages.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -69,7 +71,7 @@ public class Menu {
     public void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
-        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу ////// почему Manager???
         Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
         // выбираем конкретного читателя - заходим в его меню.
         ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
@@ -77,18 +79,35 @@ public class Menu {
         menuCycle(menu);
     }
 
-    public void enterBookNumber(String[] command) {
+    public void chooseBook(String[] command) {
         if (command.length < 2) {
             System.out.print("Выберите номер книги_");
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
-            chooseNumber(num);
+            chooseBookNumber(num);
         }
-        else chooseNumber(command[1]);
+        else chooseBookNumber(command[1]);
     }
 
-    public void chooseNumber(String numString) { // по номеру в команде выбираем конкретную запись
+    public void chooseBookNumber(String numString) {
+        int num = Integer.parseInt(String.valueOf(numString));
+        num = Storages.Book.indexBookByNumber(num); // выбираем индекс по номеру книги
+        Databases bazaBooks = Manager.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Storages.Book theBook = (Book) bazaBooks.get(num); // выбираем конкретную запись
+        // выбираем конкретную книгу - заходим в ее меню.
+        BookOptionsMenu menu = new BookOptionsMenu(theBook);
+        menu.showMenuName();
+        menuCycle(menu);
     }
+
+//        if (command.length < 2) {
+//            System.out.print("Выберите номер книги_");
+//            Scanner scan = new Scanner(System.in);
+//            String num = scan.nextLine();
+//            chooseNumber(num);
+//        }
+//        else chooseNumber(command[1]);
+//    }
 
     public void menuWrongOption() {
         System.out.println("Неверная команда! Повторите ввод.");

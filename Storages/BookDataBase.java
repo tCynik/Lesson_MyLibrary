@@ -17,7 +17,7 @@ public class BookDataBase extends Databases{
     @Override
     public Book fillFields (int count, String theLine){
         String[] pole = theLine.split(", ");
-        int invNumber = count+1;
+        int invNumber = count;
         Book book = new Book(invNumber, pole[0], pole[1], Integer.parseInt(pole[2]));
         return book;
     }

@@ -1,5 +1,9 @@
 package Menu;
 
+/**
+ * Корневое главное меню. Все последующие ветки меню наследуются отсюда.
+ *
+ */
 public class MainMenu extends Menu{
     String adress = "Главное меню\\_";
     String name = "---=== Главное меню ===---";

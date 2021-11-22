@@ -1,4 +1,7 @@
 package Storages;
+/**
+ * Шаблон класса Reader, экземплярами которого заполняется база данных ReaderDataBase
+ */
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ public class Reader extends Manager implements Serializable  {
         try {
             String[] knigiArray = knigi.split(", ");
             for (String theKniga : knigiArray) {
-                int index = Book.getIndex(theKniga, bazaKnig);
+                int index = Book.getIndexByName(theKniga, bazaKnig);
                 knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
                 Book.bookTake(index, bazaKnig); // делаем запись в БД книг
             }
@@ -45,7 +48,7 @@ public class Reader extends Manager implements Serializable  {
 
     void bookTake(int index, List<Book> bazaKnig){
         try {
-            String nazv = Book.getNazvanie(index, bazaKnig);
+            String nazv = Book.getNazvanieByIndex(index, bazaKnig);
             String avtor = Book.getAvtor(index, bazaKnig);
             knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
             Book.bookTake(index, bazaKnig); // делаем запись в БД книг
@@ -57,7 +60,7 @@ public class Reader extends Manager implements Serializable  {
 
     void bookPut(int index, List<Book> bazaKnig){
         try {
-            String nazv = Book.getNazvanie(index, bazaKnig);
+            String nazv = Book.getNazvanieByIndex(index, bazaKnig);
             String avtor = Book.getAvtor(index, bazaKnig);
             knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
             Book.bookTake(index, bazaKnig); // делаем запись в БД книг
@@ -94,9 +97,9 @@ public class Reader extends Manager implements Serializable  {
 
     public static int indexReaderByNumBileta (int number){ // выбор индекас читател по номеру билета
         int index = 0;
-        ReaderDataBase bazaReaders = new ReaderDataBase();
-        ReaderDataBase bazaReaders1 = (ReaderDataBase) downloadBaseBin(bazaReaders);
-        for (Object theReader: bazaReaders1) {
+        ReaderDataBase bazaTemp = new ReaderDataBase();
+        ReaderDataBase bazaReaders = (ReaderDataBase) downloadBaseBin(bazaTemp);
+        for (Object theReader: bazaReaders) {
             Reader reader = (Reader) theReader;
             if (reader.getNumber() == number){
                 break;
@@ -113,10 +116,10 @@ public class Reader extends Manager implements Serializable  {
                 System.out.print("На руках у читателя книги: ");
                 String nazvanie;
                 for (int i = 0; i < knigiNaRukah.size() - 1; i++) {
-                    knigiNaRukah.get(i).getNazvanie();
-                    System.out.print(knigiNaRukah.get(i).getNazvanie() + ", ");
+                    knigiNaRukah.get(i).getNazvanieByIndex();
+                    System.out.print(knigiNaRukah.get(i).getNazvanieByIndex() + ", ");
                 }
-                nazvanie = knigiNaRukah.get(knigiNaRukah.size() - 1).getNazvanie();
+                nazvanie = knigiNaRukah.get(knigiNaRukah.size() - 1).getNazvanieByIndex();
                 System.out.println(nazvanie + "."); // печатаем последнюю книгу, печать кончается точкой
             } else System.out.println("У читателя нет книг на руках");
         } catch (Exception e) {

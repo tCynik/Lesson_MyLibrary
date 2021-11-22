@@ -1,5 +1,8 @@
 package Menu;
 
+/**
+ * меню опций действия с конкретной записью читателя
+ */
 public class ReaderOptionsMenu extends Menu {
     Storages.Reader theOne;
     String adress = "Главное меню\\Читатели\\Меню читателя";

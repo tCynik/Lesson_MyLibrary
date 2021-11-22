@@ -1,4 +1,7 @@
 package Menu;
+/**
+ * Меню опций действия управления записями читателей и базой данных по читателям
+ */
 
 import Storages.*;
 
@@ -45,16 +48,4 @@ public class ReadersMenu extends Menu {
         }
         return flag;
     }
-
-//    public static void chooseNumber(String numString) { ////// не взлетело! переносим назад в майнменю, chooseReaderNumber
-//        int num = Integer.parseInt(String.valueOf(numString));
-//        num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
-//        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу //// вроде получается норм
-//        Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
-//        // выбираем конкретного читателя - заходим в его меню.
-//        ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
-//        menu.showMenuName();
-//        menuCycle(menu);
-//    }
-
 }
