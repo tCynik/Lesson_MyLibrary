@@ -71,7 +71,7 @@ public class Menu {
     public void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
-        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу ////// почему Manager???
+        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
         Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
         // выбираем конкретного читателя - заходим в его меню.
         ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
@@ -99,15 +99,6 @@ public class Menu {
         menu.showMenuName();
         menuCycle(menu);
     }
-
-//        if (command.length < 2) {
-//            System.out.print("Выберите номер книги_");
-//            Scanner scan = new Scanner(System.in);
-//            String num = scan.nextLine();
-//            chooseNumber(num);
-//        }
-//        else chooseNumber(command[1]);
-//    }
 
     public void menuWrongOption() {
         System.out.println("Неверная команда! Повторите ввод.");

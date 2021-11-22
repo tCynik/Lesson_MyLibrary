@@ -37,9 +37,10 @@ public class MainMenu extends Menu{
                 break;
             case "reader":
                 chooseReader(command);
+                System.out.println("the # is" + command[1]);
                 break;
             case "book":
-                //enterBookNumber(command);
+                chooseBook(command);
                 break;
             case "exit":
                 menuExit();

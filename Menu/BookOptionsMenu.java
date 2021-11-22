@@ -10,7 +10,7 @@ public class BookOptionsMenu extends Menu {
             "<<help>> _________ показать возможные действия",
             "<<info>> _________ информация о книге",
             "<<kard>> _________ данные о держателях книги", // тут взять/вернуть книгу
-            "<<reader #>> _____ вывести меню читателя #", // тут выгрузка, сохранение базы, и т.д.
+            "<<book #>> _______ вывести меню книги #", // тут выгрузка, сохранение базы, и т.д.
             "<<come>> _________ поставить на приход книгу",
             "<<out>> __________ списать книгу",
             "<<up>> ___________ выход в меню книг",
@@ -18,8 +18,8 @@ public class BookOptionsMenu extends Menu {
 
     public BookOptionsMenu(Book theBook){
         this.theOne = theBook;
-        //this.menuAdress = adress + " " + theOne.getNameReader()+"_";
-        //this.menuName = name + theOne.getNameReader()+ " ===---";
+        this.menuAdress = adress + " " + theOne.getNameBook()+"_";
+        this.menuName = name + theOne.getNameBook()+ " ===---";
         this.menuOptions = optoins;
     }
 
@@ -30,10 +30,13 @@ public class BookOptionsMenu extends Menu {
                 showMenuOptions();
                 break;
             case "info":
-                //theOne.printReader();
+                theOne.info();
                 break;
             case "reader":
                 chooseReader(command);
+                break;
+            case "book":
+                chooseBook(command);
                 break;
             case "take":
                 System.out.println("take the book");
@@ -51,6 +54,4 @@ public class BookOptionsMenu extends Menu {
         }
         return flag;
     }
-
-
 }

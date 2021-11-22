@@ -32,14 +32,10 @@ public class Book implements Serializable {
         return nazvanie;
     }
 
-
-///////////// обеспечить вывод информации по конкретной книге
-//    public void print (String nazvanie, List<Book> bazaKnig){ // вывод на печать через единую команду в терминале!
-//        int indexBook = getIndex(nazvanie, bazaKnig);
-//        Book theBook = (Book) bazaKnig.get(indexBook);
-//        System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
-//                + kolichestvo+ " экземпляров, на руках ");
-//    }
+    public String getNameBook() {
+        String nameBook = nazvanie+" автор "+ avtor;
+        return nameBook;
+    }
 
     public void info(){
         System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "

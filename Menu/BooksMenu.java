@@ -36,11 +36,9 @@ public class BooksMenu extends Menu {
                 Manager.showAll(Manager.downloadBaseBin(new BookDataBase()));
                 break;
             case "book":
-                ////// интерфейс в зависимости от того, выбираем ли книгу или читателя
                 chooseBook(command);
                 break;
             case "view":
-                //viewReaders();
                 System.out.println("view readers");
                 break;
             case "up":
