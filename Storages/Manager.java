@@ -57,16 +57,13 @@ public class Manager {
         return database;
     }
 
-//    public int indexByNumber (int theNumber, ArrayList<Manager> list) {
-//        for (Manager manager : list) {
-//
-//        }
-//
-//        int index=0;
-//        return index;
-//    }
     public static void showAll (Databases dataBase) { // метод печати всего содержимого вызывается для обьекта суперкласса Databases;
         dataBase.printBase();
     }
 
+    public static void takeBook (int readerIndex, int bookIndex) {
+//        Manager manager = new Manager();
+//        makeRecord(readerIndex, bookIndex);
+//        saveRecord (manager);
+    }
 }

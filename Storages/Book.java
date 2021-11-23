@@ -7,18 +7,16 @@ import java.util.Scanner;
 
 import static Storages.Manager.downloadBaseBin;
 
-public class Book implements Serializable {
+public class Book extends Manager implements Serializable {
     private int number; // индивидуальный инвентарный номер книги
-    String naznachenie; ////////////// неакктуальная фича, удалить
     private String nazvanie;
     private String avtor;
     private int kolichestvo = 0; // количество книг, которые в библиотеке
-    private List<Integer> bookHolders; // поименованы по читательским билетам держатели книг
+    private List<Reader> bookHolders; // поименованы по читательским билетам держатели книг
     ////////// тут тохраняем ссылки на конеретных читателей (объекты), у кого на руках наша книга
 
     public Book (int number, String nazvanie, String avtor, int kolichestvo){ // конструктор книги
         this.number = number;
-        naznachenie = "книга";
         this.nazvanie = nazvanie;
         this.avtor = avtor;
         this.kolichestvo = kolichestvo;
@@ -39,7 +37,7 @@ public class Book implements Serializable {
 
     public void info(){
         System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
-                + kolichestvo+ " экземпляров, на руках ");
+                + kolichestvo+ " экземпляров, на руках "+ bookHolders.size());
     }
 
     public static String getNazvanieByIndex(int index, List<Book> bazaKnig){
@@ -70,26 +68,33 @@ public class Book implements Serializable {
         }
         return index;
     }
-    public static void bookTakeHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // записываем ID держателя книги
-        Book theKniga = (Book) bazaKnig.get(indexBook);
-        theKniga.bookHolders.add(indexHolder);
-        bazaKnig.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве
+
+    public static void bookTakeHolder(Reader bookHolder, int indexBook) { // записываем ID держателя книги
+        BookDataBase bazaTemp = new BookDataBase();
+        BookDataBase bazaBooks = (BookDataBase) downloadBaseBin(bazaTemp);
+        Book theKniga = (Book) bazaBooks.get(indexBook);
+        theKniga.bookHolders.add(bookHolder); // добавляем в лист копию карточки читателя
+        bazaBooks.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве
     }
 
-    public static void bookTake (int index, List<Book> bazaKnig) { // меняем количество книг
-        Book theKniga = (Book) bazaKnig.get(index);
-        theKniga.kolichestvo--; //
-        bazaKnig.set(index, theKniga); // изменяем параметр количества и перезаисываем в нашем массиве
+    public void bookTake (Reader reader) {
+        bookHolders.add(reader);
     }
+
+//    public static void bookTake (int index, List<Book> bazaKnig) { // меняем количество книг
+//        Book theKniga = (Book) bazaKnig.get(index);
+//        theKniga.kolichestvo--; //
+//        bazaKnig.set(index, theKniga); // изменяем параметр количества и перезаисываем в нашем массиве
+//    }
 
     public static void bookPutHolder(int indexHolder, int indexBook, List<Book> bazaKnig) { // убираем ID держателя книги
         Book theKniga = (Book) bazaKnig.get(indexBook);
         int count = 0;
-        for (int index:theKniga.bookHolders) {
-            if (index == indexBook) {
-                theKniga.bookHolders.remove(count);
-            }
-        }
+//        for (int index:theKniga.bookHolders) {
+//            if (index == indexBook) {
+//                theKniga.bookHolders.remove(count);
+//            }
+//        }
         bazaKnig.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве
     }
 

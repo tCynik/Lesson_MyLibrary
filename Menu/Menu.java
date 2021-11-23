@@ -7,18 +7,19 @@ package Menu;
 
 import Storages.*;
 
-import java.util.List;
 import java.util.Scanner;
+
+import static Storages.Manager.uploadBaseBin;
 
 public class Menu {
     String menuAdress;
     String menuName;
     String[] menuOptions;
 
-    public Menu(){}
+    public Menu() {
+    }
 
     public Menu(String command) {
-
     }
 
     public void showMenuAdress() {
@@ -31,7 +32,7 @@ public class Menu {
 
     public void showMenuOptions() { // show the menu options in current position
         System.out.println("Список команд:");
-        for (String theLine: menuOptions ) {
+        for (String theLine : menuOptions) {
             System.out.println(theLine);
         }
     }
@@ -46,7 +47,8 @@ public class Menu {
     }
 
     public boolean menuSorting(String[] command) {
-        return true;}
+        return true;
+    }
 
     public void menuCycle(Menu menu) {
         boolean flag = true;
@@ -64,11 +66,11 @@ public class Menu {
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
             chooseReaderNumber(num);
-        }
-        else chooseReaderNumber(command[1]);
+        } else chooseReaderNumber(command[1]);
+
     }
 
-    public void chooseReaderNumber(String numString) {
+    private void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
         Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
@@ -85,11 +87,10 @@ public class Menu {
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
             chooseBookNumber(num);
-        }
-        else chooseBookNumber(command[1]);
+        } else chooseBookNumber(command[1]);
     }
 
-    public void chooseBookNumber(String numString) {
+    private void chooseBookNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Book.indexBookByNumber(num); // выбираем индекс по номеру книги
         Databases bazaBooks = Manager.downloadBaseBin(new BookDataBase()); // загружаем базу
@@ -119,4 +120,45 @@ public class Menu {
         return false;
     }
 
+    public static void takeBook(Reader reader) { // запись взятия книги из библиотеки
+        Databases bazaBooks = Manager.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        int bookNumber =0;
+
+        boolean flag = true;
+        while(flag) {
+            System.out.print("Введите номер книги. <<list>> - вывод списка книг_"); ////// прикрутить list
+            Scanner scan = new Scanner(System.in);
+            String command = scan.nextLine();
+            command = command.toLowerCase().trim();
+
+            switch (command) {
+                case "list":
+                    Manager.showAll(new BookDataBase());
+                    break;
+                case "exit":
+                    flag = false;
+                default:
+                    try {
+                        bookNumber = Integer.parseInt(command); // проверяем, превращается ли команда в цифры
+                        if (bookNumber > (bazaBooks.size()-1)) {
+                            System.out.println("недопустимое число, повторите ввод. <<exit>> - выход");
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("неверный номер, повторите ввод. <<exit>> - выход");;
+                    }        }
+        }
+        if (bookNumber !=0 ) {
+            Storages.Book book = (Book) bazaBooks.get(bookNumber); // выбираем конкретную запись
+
+            reader.bookTake(book); // добавляем запись в список книг на руках
+            book.bookTake(reader);
+
+            bazaBooks.set(book.getNumber(), book);
+            uploadBaseBin(bazaBooks);
+            bazaReaders.set(reader.getNumber(), reader); // заменили запись в базе на обневленный обьект
+            uploadBaseBin(bazaReaders); // сохраняем базу
+        }
+
+    }
 }

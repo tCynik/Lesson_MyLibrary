@@ -36,7 +36,7 @@ public class ReaderOptionsMenu extends Menu {
                 chooseReader(command);
                 break;
             case "take":
-                System.out.println("take the book");
+                Menu.takeBook(theOne);
                 break;
             case "put":
                 System.out.println("put the book");
