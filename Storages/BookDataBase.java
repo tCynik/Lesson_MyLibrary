@@ -1,10 +1,12 @@
 package Storages;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+/**
+ * Класс База данных по читателям. Является наследником суперкласса Databases.
+ * Обьект класса представляет собой динамический массив, каждая строчка которого - запись отдельного
+ * обьекта "книга" класса Book
+ * дополняет (переопределяет) общие (родительские) методы для конкретной текущей базы данных в зависимости от ее структуры
+ * Переопределяет текущие характеристики базы - ее название, адреса файлов
+ */
 
 public class BookDataBase extends Databases{
 

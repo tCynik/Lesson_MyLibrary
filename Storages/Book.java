@@ -1,4 +1,7 @@
 package Storages;
+/**
+ * Шаблон класса Book. Экземпляры класса - книги.
+ */
 
 import java.io.*;
 import java.util.ArrayList;
@@ -36,8 +39,14 @@ public class Book extends Manager implements Serializable {
     }
 
     public void info(){
+        int numberBookHolders = 0;
+        String stringNumberbookHolders = null;
+        try { // проверка есть ли вообще держатели этой книги
+            numberBookHolders = bookHolders.size();
+            stringNumberbookHolders = "" + numberBookHolders;
+        } catch (NullPointerException e) { stringNumberbookHolders = "нет";}
         System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
-                + kolichestvo+ " экземпляров, на руках "+ bookHolders.size());
+                + kolichestvo+ " экземпляров, на руках "+ stringNumberbookHolders+" экземпляров");
     }
 
     public static String getNazvanieByIndex(int index, List<Book> bazaKnig){

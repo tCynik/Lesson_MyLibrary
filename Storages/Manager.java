@@ -1,7 +1,8 @@
 package Storages;
 /**
  * подпрограмма - менеджер управления базами данных
- * содержит в себе методы для работы с базами данных - обьектами суперкласса Databases(ArrayList)
+ * содержит в себе методы для работы с базами данных - субклассами суперкласса Databases(ArrayList)
+ * инструментарий класса Manager: чтение и запись файлов БД, вывод информации по БД.
  * вынесена из класса start из-за сложности с доступом к методам класса в папке src из вложенных папок :(
  */
 
@@ -39,7 +40,6 @@ public class Manager {
         } catch (IOException e) {
             System.out.println("Ошибка ввода-вывода базы данных " + database.toString()) ;
         }
-    System.out.println("выгрузка базы данных "+database.toString()+" завершена успешно");
     }
 
     public static Databases downloadBaseBin (Databases blankDatabase){
@@ -53,7 +53,6 @@ public class Manager {
         } catch (ClassNotFoundException e) {
             System.out.println("Ошибка при загрузке БД "+database.toString()+": Не найден класс");
         }
-        System.out.println("загрузка базы данных "+database.toString()+" завершена успешно");
         return database;
     }
 

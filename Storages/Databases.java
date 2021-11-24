@@ -26,7 +26,7 @@ public class Databases extends ArrayList { // родительский клас�
         return localBaseName;
     }
 
-    public Object fillFields (int count, String theLine) { //// в каждом классе БД переопределить метод в зависимости от структуры каждого класса
+    public Object fillFields (int count, String theLine) { // Заполнение полей обьекта через конструктор при чтении из txt
     Object object = new Object();
     return object;
     }
