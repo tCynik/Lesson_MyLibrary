@@ -2,7 +2,7 @@ package Storages;
 /**
  * подпрограмма - менеджер управления базами данных
  * содержит в себе методы для работы с базами данных - субклассами суперкласса Databases(ArrayList)
- * инструментарий класса Manager: чтение и запись файлов БД, вывод информации по БД.
+ * инструментарий класса: чтение и запись файлов БД, вывод информации по БД.
  * вынесена из класса start из-за сложности с доступом к методам класса в папке src из вложенных папок :(
  */
 
@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Manager {
+public class CommonDatabaseMethods {
     public int indexByNum(int num) { // получение индекса элемента через индивидуальный номер
         int index=0;
         return index;
@@ -60,9 +60,8 @@ public class Manager {
         dataBase.printBase();
     }
 
-    public static void takeBook (int readerIndex, int bookIndex) {
-//        Manager manager = new Manager();
-//        makeRecord(readerIndex, bookIndex);
-//        saveRecord (manager);
+    public int getNumber(){
+        int number = 0;
+        return number;
     }
 }

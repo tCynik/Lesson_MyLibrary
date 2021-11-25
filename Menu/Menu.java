@@ -10,7 +10,7 @@ import Storages.*;
 import java.util.Scanner;
 
 import static Storages.Book.indexBookByNumber;
-import static Storages.Manager.uploadBaseBin;
+import static Storages.CommonDatabaseMethods.uploadBaseBin;
 
 public class Menu {
     String menuAdress;
@@ -73,8 +73,8 @@ public class Menu {
 
     private void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
-        num = Storages.Reader.indexReaderByNumBileta(num); // выбираем индекс по номеру билета
-        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        num = Storages.Reader.getIndexByNumBileta(num); // выбираем индекс по номеру билета
+        Databases bazaReaders = CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()); // загружаем базу
         Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
         // выбираем конкретного читателя - заходим в его меню.
         ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
@@ -94,7 +94,7 @@ public class Menu {
     private void chooseBookNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = indexBookByNumber(num); // выбираем индекс по номеру книги
-        Databases bazaBooks = Manager.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Databases bazaBooks = CommonDatabaseMethods.downloadBaseBin(new BookDataBase()); // загружаем базу
         Storages.Book theBook = (Book) bazaBooks.get(num); // выбираем конкретную запись
         // выбираем конкретную книгу - заходим в ее меню.
         BookOptionsMenu menu = new BookOptionsMenu(theBook);
@@ -121,100 +121,83 @@ public class Menu {
         return false;
     }
 
-    public static void takeBook(Reader reader) { // запись взятия книги из библиотеки
-        chooseBook.takeBook(reader);
+    public void main() {
+        MainMenu menu = new MainMenu();
+        menu.showMenuName();
+        menu.menuCycle(menu);
     }
+
+    public void takeBook(Reader reader) { // запись взятия книги из библиотеки
+        chooseBookWhileTaking.takeBook(reader);
+    }
+
+    public void putBook () {
+        System.out.println("Выберите № книги, которую возвращает читатель");
+/**
+ * введена команда <<put>> в меню читателя
+ * предлагаем выбрать нужную книгу (ввод) можно вызвать help со списком книг
+ * сортировка по валидности (введена цифра в интервале выбора) с возможностью выхода
+ * делаем соотв записи в базе, выводим сообщении об успешном возврате книги
+ */
+    }
+
+    ///////////// загрузка долгов
 }
 
- class chooseBook{ // класс для реализации методов выбора книги при ее взятии или возвращении
+ class chooseBookWhileTaking { // класс для реализации методов выбора книги при ее взятии или возвращении
     protected static void takeBook(Reader reader) {
-        Databases bazaBooks = Manager.downloadBaseBin(new BookDataBase()); // загружаем базу
-        Databases bazaReaders = Manager.downloadBaseBin(new ReaderDataBase()); // загружаем базу
-        int bookNumber =0;
+        Databases bazaBooks = CommonDatabaseMethods.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Databases bazaReaders = CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()); // загружаем базу
 
         boolean flag = true;
         while(flag) {
-            System.out.print("Введите номер книги. <<list>> - вывод списка книг_"); ////// прикрутить list
+            System.out.print("Введите номер книги. <<list>> - вывод списка книг _"); ////// прикрутить list
             String[] command = Menu.menuInput();
-            sort(command[0], reader, bazaBooks, bazaReaders);
+            flag = sortingWhileChoosingBook(command[0], reader, bazaBooks, bazaReaders);
         }
-/** вар. 1
- * далее пытаемся определить 1 часть введенного как цифру
- *  ЕСЛИ определяется - изучаем цифру
- *      ЕСЛИ цифра не длиннее списка, выбираем книгу, ИНАЧЕ выдаем ошибку и повторный ввод
- *  ЕСЛИ не определяется - изучаем слово
- *      ЕСЛИ слово из списка команд, делаем команду иначе выдаем ошибку и повторный ввод
- *
- * вар.2
- * запускаем сортировку
- *      сначала отбиваем все известные команды
- *      потом безем цифры от 1 до bazaBooks.size(), их принимаем в качестве агрумента для выбора книги
- *      остальное бросаем в ошибку
-  */
-//            try {
-//                bookNumber = Integer.parseInt(command[0]); // проверяем, превращается ли команда в цифры
-//                if (bookNumber > (bazaBooks.size() - 1) | bookNumber == 0) {
-//                    wrongOptoin();
-//                }
-//            } catch (IndexOutOfBoundsException e) { // если не превращается, пропускаем через сортировку команд
-//                flag = sorting(command[0]);
-//                if (flag == false)
-//                    continue;
-//            } catch (NumberFormatException e) {
-//                flag = sorting(command[0]);
-//                if (flag == false)
-//                    continue;
-//            }
     }
 
-    protected static boolean sort (String command, Reader reader, Databases bazaBooks, Databases bazaReaders) {
+    protected static boolean sortingWhileChoosingBook(String command, Reader reader, Databases bazaBooks, Databases bazaReaders) {
         boolean flag = true;
         switch (command) {
             case "list":
-                Manager.showAll(bazaBooks);
+                CommonDatabaseMethods.showAll(bazaBooks);
                 break;
             case "help":
-                Manager.showAll(new BookDataBase());
+                CommonDatabaseMethods.showAll(new BookDataBase());
                 break;
             case "exit":
-                flag = false;
+                Menu menu = new Menu();
+                menu.menuExit();
                 break;
             default:
-                int bookNumber = Integer.parseInt(command);
-                makeTheRecords(reader, bookNumber, bazaBooks, bazaReaders);
+                int bookNumber = 0;
+                try {
+                    bookNumber = Integer.parseInt(command);
+                } catch (NumberFormatException e) { wrongOptoin(); break;
+                }
+                try {
+                    Storages.Book book = (Book) bazaBooks.get(indexBookByNumber(bookNumber));
+                    makeTheRecords(reader, book, bazaBooks, bazaReaders);
+                } catch (IndexOutOfBoundsException e) {wrongOptoin(); break;}
+                flag = false;
         }
         return flag;
     }
 
-    protected static boolean sorting (String command) {
-        boolean flag = true;
-        switch (command) {
-            case "help":
-                Manager.showAll(new BookDataBase());
-                break;
-            case "exit":
-                flag = false;
-                break;
-            default:
-                wrongOptoin();
-        }
-        return flag;
-    }
     protected static void wrongOptoin() {
-        System.out.println("Неверная команда, првоерьте ввод");
+        System.out.println("Неверная команда, проверьте ввод");
      }
-    protected static void makeTheRecords(Reader reader, int number, Databases bazaBooks, Databases bazaReaders) {
-//////// в этом методе ошибка NullPointerException, найти и обезвредить
-        Storages.Book book = (Book) bazaBooks.get(indexBookByNumber(number)); // выбираем конкретную запись
-
+    protected static void makeTheRecords(Reader reader, Book book, Databases bazaBooks, Databases bazaReaders) {
         reader.bookTake(book); // добавляем запись в список книг на руках
         book.bookTake(reader); // добавляем запись в карточку книги
 
-        bazaBooks.set(book.getNumber(), book); // меняем обьект книги в массиве БД
+        bazaBooks.set(bazaBooks.getIndexObject(book), book); // меняем обьект книги в массиве БД
         uploadBaseBin(bazaBooks); // сохраняем БД
-        bazaReaders.set(reader.getNumber(), reader); // заменили запись в базе на обновленный обьект
+        bazaReaders.set(bazaReaders.getIndexObject(reader), reader); // заменили запись в базе на обновленный обьект
         uploadBaseBin(bazaReaders); // сохраняем базу
 
-        System.out.println("Читатель "+ reader.getNameReader() +" взял книгу "+ book.getNameBook());
+        System.out.println("Читатель "+ reader.getName() +" взял книгу "+book.getNazvanieAndAvtor());
+
     }
 }

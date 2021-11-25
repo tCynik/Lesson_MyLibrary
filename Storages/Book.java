@@ -6,16 +6,13 @@ package Storages;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-import static Storages.Manager.downloadBaseBin;
-
-public class Book extends Manager implements Serializable {
+public class Book extends CommonDatabaseMethods implements Serializable {
     private int number; // индивидуальный инвентарный номер книги
     private String nazvanie;
     private String avtor;
     private int kolichestvo = 0; // количество книг, которые в библиотеке
-    private List<Reader> bookHolders; // поименованы по читательским билетам держатели книг
+    private List<Reader> bookHolders = new ArrayList<>(); // поименованы по читательским билетам держатели книг
     ////////// тут тохраняем ссылки на конеретных читателей (объекты), у кого на руках наша книга
 
     public Book (int number, String nazvanie, String avtor, int kolichestvo){ // конструктор книги
@@ -29,11 +26,11 @@ public class Book extends Manager implements Serializable {
         return number;
     }
 
-    public String getNazvanieByIndex(){
+    public String getNazvanie(){
         return nazvanie;
     }
 
-    public String getNameBook() {
+    public String getNazvanieAndAvtor() {
         String nameBook = nazvanie+" автор "+ avtor;
         return nameBook;
     }
@@ -41,28 +38,17 @@ public class Book extends Manager implements Serializable {
     public void info(){
         int numberBookHolders = 0;
         String stringNumberbookHolders = null;
+        System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+                + kolichestvo+ " экземпляров,");
         try { // проверка есть ли вообще держатели этой книги
             numberBookHolders = bookHolders.size();
-            stringNumberbookHolders = "" + numberBookHolders;
-        } catch (NullPointerException e) { stringNumberbookHolders = "нет";}
-        System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
-                + kolichestvo+ " экземпляров, на руках "+ stringNumberbookHolders+" экземпляров");
-    }
-
-    public static String getNazvanieByIndex(int index, List<Book> bazaKnig){
-        String nazvKnigi = bazaKnig.get(index).nazvanie;
-        return nazvKnigi;
-    }
-
-    public static int getIndexByName(String nameTheBook, List<Book> bazaKnig){
-        int index=0; // если не ставить 0, возможно возвращение значения NULL
-        for (Book theBook: bazaKnig) {
-            if (nameTheBook.equals(theBook.nazvanie)){
-                index = bazaKnig.indexOf(theBook);
-                break;
+            System.out.print("на руках у "+ numberBookHolders+" читателей: ");
+            for (int i = 0; i < numberBookHolders - 1; i++) {
+                System.out.print(bookHolders.get(i).getName() + ", ");
             }
-        }
-        return index;
+            System.out.println( bookHolders.get(numberBookHolders - 1).getName()+".");
+        } catch (NullPointerException e) { stringNumberbookHolders = "на руках у читателей нет";}
+
     }
 
     public static int indexBookByNumber(int number){

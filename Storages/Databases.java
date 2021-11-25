@@ -40,4 +40,16 @@ public class Databases extends ArrayList { // родительский клас�
 
     public void printLine (Object object) {}
 
+    public int getIndexObject (CommonDatabaseMethods manager) {
+        int number = manager.getNumber();
+        int index;
+        for (index =0; index < size(); index++) {
+            CommonDatabaseMethods object = (CommonDatabaseMethods) get(index);
+            if (object.getNumber() == number) {
+                break;
+            }
+        }
+        return index;
+    }
+
 }

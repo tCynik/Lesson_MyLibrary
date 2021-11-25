@@ -13,7 +13,8 @@ public class ReadersMenu extends Menu {
                         "<<reader>> ______ вывести читателя с заданным номером>>", // тут взять/вернуть книгу
             //"<<books>> _______ работа с БД книг",
                         "<<baza>> _____ работа с БД читателей", // тут выгрузка, сохранение базы, и т.д.
-                        "<<up>> __________ выход в главное меню",
+                        "<<up>> __________ назад",
+                        "<<main>> ________ выход в главное меню",
                         "<<exit>> ________ выход из программы"};
 
     public ReadersMenu(){
@@ -30,7 +31,7 @@ public class ReadersMenu extends Menu {
                 break;
             case "list":
                 System.out.println("Список читателей библиотеки:");
-                Manager.showAll(Manager.downloadBaseBin(new ReaderDataBase()));
+                CommonDatabaseMethods.showAll(CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()));
                 break;
             case "reader":
                 chooseReader(command);
@@ -38,11 +39,15 @@ public class ReadersMenu extends Menu {
             case "baza":
                 System.out.println("working with the datbase");
                 break;
+            case "main":
+                main();
+                break;
             case "up":
                 flag = menuUp();
                 break;
             case "exit":
                 menuExit();
+                break;
             default:
                 menuWrongOption();
         }

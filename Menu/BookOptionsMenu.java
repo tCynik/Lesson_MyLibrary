@@ -13,13 +13,14 @@ public class BookOptionsMenu extends Menu {
             "<<book #>> _______ вывести меню книги #", // тут выгрузка, сохранение базы, и т.д.
             "<<come>> _________ поставить на приход книгу",
             "<<out>> __________ списать книгу",
-            "<<up>> ___________ выход в меню книг",
+            "<<up>> ___________ назад",
+            "<<main>> _________ выход в главное меню",
             "<<exit>> _________ выход из программы"};
 
     public BookOptionsMenu(Book theBook){
         this.theOne = theBook;
-        this.menuAdress = adress + " " + theOne.getNameBook()+"_";
-        this.menuName = name + theOne.getNameBook()+ " ===---";
+        this.menuAdress = adress + " " + theOne.getNazvanieAndAvtor()+"_";
+        this.menuName = name + theOne.getNazvanieAndAvtor()+ " ===---";
         this.menuOptions = optoins;
     }
 
@@ -44,11 +45,15 @@ public class BookOptionsMenu extends Menu {
             case "put":
                 System.out.println("put the book");
                 break;
+            case "main":
+                main();
+                break;
             case "up":
                 flag = menuUp();
                 break;
             case "exit":
                 menuExit();
+                break;
             default:
                 menuWrongOption();
         }

@@ -1,12 +1,7 @@
 package Menu;
 
 import Storages.BookDataBase;
-import Storages.Manager;
-import Storages.Reader;
-import Storages.ReaderDataBase;
-
-import java.awt.print.Book;
-import java.util.List;
+import Storages.CommonDatabaseMethods;
 
 public class BooksMenu extends Menu {
     String adress = "Главное меню\\Книги\\_";
@@ -16,7 +11,8 @@ public class BooksMenu extends Menu {
             "<<list>> ________ показать список книг",
             "<<book #>> ______ вывести кингу с заданным номером>>", // тут взять/вернуть книгу
             "<<baza>> ________ работа с БД книг", // тут выгрузка, сохранение базы, и т.д.
-            "<<up>> __________ выход в главное меню",
+            "<<up>> __________ назад",
+            "<<main>> ________ выход в главное меню",
             "<<exit>> ________ выход из программы"};
 
     public BooksMenu(){
@@ -33,7 +29,7 @@ public class BooksMenu extends Menu {
                 break;
             case "list":
                 System.out.println("Список книг:");
-                Manager.showAll(Manager.downloadBaseBin(new BookDataBase()));
+                CommonDatabaseMethods.showAll(CommonDatabaseMethods.downloadBaseBin(new BookDataBase()));
                 break;
             case "book":
                 chooseBook(command);
@@ -44,8 +40,12 @@ public class BooksMenu extends Menu {
             case "up":
                 flag = menuUp();
                 break;
+            case "main":
+                main();
+                break;
             case "exit":
                 menuExit();
+                break;
             default:
                 menuWrongOption();
         }

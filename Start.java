@@ -1,10 +1,7 @@
 import Menu.MainMenu;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Scanner;
+
 import Storages.*;
 
 /**
@@ -15,10 +12,10 @@ import Storages.*;
 //// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
-        ReaderDataBase readersData = (ReaderDataBase) Manager.downloadBaseTxt(new ReaderDataBase());
-        BookDataBase booksData = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
-        Manager.uploadBaseBin(booksData);
-        Manager.uploadBaseBin(readersData);
+        ReaderDataBase readersData = (ReaderDataBase) CommonDatabaseMethods.downloadBaseTxt(new ReaderDataBase());
+        BookDataBase booksData = (BookDataBase) CommonDatabaseMethods.downloadBaseTxt(new BookDataBase());
+        CommonDatabaseMethods.uploadBaseBin(booksData);
+        CommonDatabaseMethods.uploadBaseBin(readersData);
         //BookDataBase booksData1 = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
         //booksData1 = (BookDataBase) Manager.downloadBaseBin(new BookDataBase());
 

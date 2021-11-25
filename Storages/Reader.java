@@ -6,9 +6,8 @@ package Storages;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class Reader extends Manager implements Serializable  {
+public class Reader extends CommonDatabaseMethods implements Serializable  {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private int number; // номера ранее выданных билетов
@@ -25,7 +24,7 @@ public class Reader extends Manager implements Serializable  {
 /////////   добавить метод удаления читателей: ФИО: "Удален", книги Null, номер билета Null. Если остаются книги,
 ///////// вывод сообщения: Удаление читателя "ФИО" невозможно: у читателя не возвращены книги: "перечисление книг"
 /////////   на будущее сделать отдельную базу для бывших читателей (при удалении)
-    public String getNameReader(){
+    public String getName(){
         return nameReader;
     }
 
@@ -48,43 +47,12 @@ public class Reader extends Manager implements Serializable  {
     public void bookTake (Book book){
         knigiNaRukah.add(book);
     }
-//    void bookTake(int index, List<Book> bazaKnig){
-//        try {
-//            String nazv = Book.getNazvanieByIndex(index, bazaKnig);
-//            String avtor = Book.getAvtor(index, bazaKnig);
-//            knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
-//            Book.bookTake(index, bazaKnig); // делаем запись в БД книг
-//            System.out.println("Читатель " + nameReader + " взял книгу " + nazv + " авт. " + avtor);
-//
-//        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
-//        }
-//    }
 
-//////// переписать в соответствии с современной архитектурой bookTake
-//    void bookPut(int index, List<Book> bazaKnig){
-//        try {
-//            String nazv = Book.getNazvanieByIndex(index, bazaKnig);
-//            String avtor = Book.getAvtor(index, bazaKnig);
-//            knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
-//            Book.bookTake(index, bazaKnig); // делаем запись в БД книг
-//            System.out.println("Читатель " + nameReader + " вернул книгу " + nazv + " авт. " + avtor);
-//        } catch (Exception e) { System.out.println("Возникла ошибка при чтении базы данных. Новая запись не добавлена.");
-//        }
-//    }
     public void info(){
         int numOfBooks = knigiNaRukah.size();
         System.out.println("билет №"+ number +", читатель "+nameReader+ " на руках "+numOfBooks+" книг");
     }
 
-//    public static void showAll() { // вывод списка всех читателей
-//        List<Reader> bazaReaders = downloadReadersBin();
-//        bazaReaders.size();
-//        for (Reader theReader : bazaReaders) {
-//            int numOfBooks = theReader.knigiNaRukah.size();
-//            System.out.println("билет №"+theReader.numberBileta+", читатель "+theReader.nameReader+
-//                    " на руках "+numOfBooks+" книг");
-//        }
-//    }
 
 //    public int indexByNumber (int number) {
 //        int index =0;
@@ -97,7 +65,7 @@ public class Reader extends Manager implements Serializable  {
 //        return index;
 //    }
 
-    public static int indexReaderByNumBileta (int number){ // выбор индекас читател по номеру билета
+    public static int getIndexByNumBileta(int number){ // выбор индекас читател по номеру билета
         int index = 0;
         ReaderDataBase bazaTemp = new ReaderDataBase();
         ReaderDataBase bazaReaders = (ReaderDataBase) downloadBaseBin(bazaTemp);
@@ -114,19 +82,27 @@ public class Reader extends Manager implements Serializable  {
         try {
             System.out.println("Справка о клиенте: " + theBiblioteka + ". Читатель " + nameReader + " " + yearBirth +
                     " г.р., читательский билет №" + number + ", тел.: " + phoneNumber);
-            if (knigiNaRukah.size() > 0) {
+            /////// тут поставить метод вывода списка книг у читателя. Если книг нет - так и пишем
+            int skolkoKnig = knigiNaRukah.size();
+            if (skolkoKnig > 0) {
                 System.out.print("На руках у читателя книги: ");
                 String nazvanie;
-                for (int i = 0; i < knigiNaRukah.size() - 1; i++) {
-                    knigiNaRukah.get(i).getNazvanieByIndex();
-                    System.out.print(knigiNaRukah.get(i).getNazvanieByIndex() + ", ");
+                for (int i = 0; i < skolkoKnig - 1; i++) {
+                    knigiNaRukah.get(i).getNazvanie();
+                    System.out.print((i+1)+ ". " + knigiNaRukah.get(i).getNazvanie() + ", ");
                 }
-                nazvanie = knigiNaRukah.get(knigiNaRukah.size() - 1).getNazvanieByIndex();
-                System.out.println(nazvanie + "."); // печатаем последнюю книгу, печать кончается точкой
+                nazvanie = knigiNaRukah.get(skolkoKnig - 1).getNazvanie();
+                System.out.println((skolkoKnig-1) + ". " + nazvanie + "."); // печатаем последнюю книгу, печать кончается точкой
             } else System.out.println("У читателя нет книг на руках");
         } catch (Exception e) {
             System.out.println("Возникла ошибка при чтении базы данных");
         }
+    }
+
+    public boolean listBookOnReader (Reader reader){
+        boolean flag = false;
+            /////////// перенести сюда метод вызова списка книг у читателя
+        return flag;
     }
 
     //////////////// данный метод теперь в манагере. Удалить.
