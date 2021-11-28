@@ -43,7 +43,7 @@ public class ReaderOptionsMenu extends Menu {
                 System.out.println("put the book");
                 break;
             case "main":
-                main();
+                exitToMain();
                 break;
             case "up":
                 flag = menuUp();

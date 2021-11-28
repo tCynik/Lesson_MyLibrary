@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reader extends CommonDatabaseMethods implements Serializable  {
+public class Reader extends BooksAndReaders implements Serializable  {
     static String theBiblioteka = "Библиотека № 13";
     private final String nameReader; // дефалт
     private int number; // номера ранее выданных билетов
@@ -48,27 +48,10 @@ public class Reader extends CommonDatabaseMethods implements Serializable  {
         knigiNaRukah.add(book);
     }
 
-    public void info(){
-        int numOfBooks = knigiNaRukah.size();
-        System.out.println("билет №"+ number +", читатель "+nameReader+ " на руках "+numOfBooks+" книг");
-    }
-
-
-//    public int indexByNumber (int number) {
-//        int index =0;
-//        List<Reader> bazaReaders = downloadReadersBin();
-//        for (Reader theReader: bazaReaders) {
-//            if (theReader.number == number){
-//                break;
-//            } else index++;
-//        }
-//        return index;
-//    }
-
     public static int getIndexByNumBileta(int number){ // выбор индекас читател по номеру билета
         int index = 0;
         ReaderDataBase bazaTemp = new ReaderDataBase();
-        ReaderDataBase bazaReaders = (ReaderDataBase) downloadBaseBin(bazaTemp);
+        ReaderDataBase bazaReaders = (ReaderDataBase) Databases.downloadBaseBin(bazaTemp);
         for (Object theReader: bazaReaders) {
             Reader reader = (Reader) theReader;
             if (reader.getNumber() == number){
@@ -99,24 +82,9 @@ public class Reader extends CommonDatabaseMethods implements Serializable  {
         }
     }
 
-    public boolean listBookOnReader (Reader reader){
-        boolean flag = false;
-            /////////// перенести сюда метод вызова списка книг у читателя
-        return flag;
+    public void printLine() {
+        System.out.println("Читатель " + nameReader + ", читательский билет №" + number + ", на руках "
+                + knigiNaRukah.size() + " книг");
     }
 
-    //////////////// данный метод теперь в манагере. Удалить.
-//    public static List<Reader> downloadReadersBin (){
-//        List bazaReaders = new <Reader> ArrayList();
-//        try (ObjectInputStream obj = new ObjectInputStream(new FileInputStream("readers.bin"))){
-//            bazaReaders=(List<Reader>)obj.readObject();
-//        } catch (FileNotFoundException e) {
-//            System.out.println("Ошибка при загрузке БД читателей: файл не найден");
-//        } catch (IOException e) {
-//            System.out.println("Ошибка при загрузке БД читателей: ошибка ввода-вывода");
-//        } catch (ClassNotFoundException e) {
-//            System.out.println("Ошибка при загрузке БД читателей: Не найден класс");
-//        }
-//        return bazaReaders;
-//    }
 }

@@ -12,10 +12,10 @@ import Storages.*;
 //// исправить ошибки при записи/чтении bin
 public class Start {
     public static void main (String[] args) throws IOException, ClassNotFoundException {
-        ReaderDataBase readersData = (ReaderDataBase) CommonDatabaseMethods.downloadBaseTxt(new ReaderDataBase());
-        BookDataBase booksData = (BookDataBase) CommonDatabaseMethods.downloadBaseTxt(new BookDataBase());
-        CommonDatabaseMethods.uploadBaseBin(booksData);
-        CommonDatabaseMethods.uploadBaseBin(readersData);
+        ReaderDataBase readersData = (ReaderDataBase) Databases.downloadBaseTxt(new ReaderDataBase());
+        BookDataBase booksData = (BookDataBase) Databases.downloadBaseTxt(new BookDataBase());
+        Databases.uploadBaseBin(booksData);
+        Databases.uploadBaseBin(readersData);
         //BookDataBase booksData1 = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
         //booksData1 = (BookDataBase) Manager.downloadBaseBin(new BookDataBase());
 

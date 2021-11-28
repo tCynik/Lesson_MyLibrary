@@ -10,7 +10,7 @@ import Storages.*;
 import java.util.Scanner;
 
 import static Storages.Book.indexBookByNumber;
-import static Storages.CommonDatabaseMethods.uploadBaseBin;
+import static Storages.Databases.uploadBaseBin;
 
 public class Menu {
     String menuAdress;
@@ -74,7 +74,7 @@ public class Menu {
     private void chooseReaderNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = Storages.Reader.getIndexByNumBileta(num); // выбираем индекс по номеру билета
-        Databases bazaReaders = CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        Databases bazaReaders = Databases.downloadBaseBin(new ReaderDataBase()); // загружаем базу
         Storages.Reader theReader = (Reader) bazaReaders.get(num); // выбираем конкретную запись
         // выбираем конкретного читателя - заходим в его меню.
         ReaderOptionsMenu menu = new ReaderOptionsMenu(theReader);
@@ -94,7 +94,7 @@ public class Menu {
     private void chooseBookNumber(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = indexBookByNumber(num); // выбираем индекс по номеру книги
-        Databases bazaBooks = CommonDatabaseMethods.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Databases bazaBooks = Databases.downloadBaseBin(new BookDataBase()); // загружаем базу
         Storages.Book theBook = (Book) bazaBooks.get(num); // выбираем конкретную запись
         // выбираем конкретную книгу - заходим в ее меню.
         BookOptionsMenu menu = new BookOptionsMenu(theBook);
@@ -121,7 +121,7 @@ public class Menu {
         return false;
     }
 
-    public void main() {
+    public void exitToMain() {
         MainMenu menu = new MainMenu();
         menu.showMenuName();
         menu.menuCycle(menu);
@@ -146,8 +146,8 @@ public class Menu {
 
  class chooseBookWhileTaking { // класс для реализации методов выбора книги при ее взятии или возвращении
     protected static void takeBook(Reader reader) {
-        Databases bazaBooks = CommonDatabaseMethods.downloadBaseBin(new BookDataBase()); // загружаем базу
-        Databases bazaReaders = CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+        Databases bazaBooks = Databases.downloadBaseBin(new BookDataBase()); // загружаем базу
+        Databases bazaReaders = Databases.downloadBaseBin(new ReaderDataBase()); // загружаем базу
 
         boolean flag = true;
         while(flag) {
@@ -161,11 +161,12 @@ public class Menu {
         boolean flag = true;
         switch (command) {
             case "list":
-                CommonDatabaseMethods.showAll(bazaBooks);
+                bazaBooks.printAll();
+                //CommonDatabaseMethods.showAll(bazaBooks);
                 break;
-            case "help":
-                CommonDatabaseMethods.showAll(new BookDataBase());
-                break;
+//            case "help":
+//                CommonDatabaseMethods.showAll(new BookDataBase());
+//                break;
             case "exit":
                 Menu menu = new Menu();
                 menu.menuExit();
@@ -192,9 +193,9 @@ public class Menu {
         reader.bookTake(book); // добавляем запись в список книг на руках
         book.bookTake(reader); // добавляем запись в карточку книги
 
-        bazaBooks.set(bazaBooks.getIndexObject(book), book); // меняем обьект книги в массиве БД
+        bazaBooks.set(bazaBooks.getIndexByObject(book), book); // меняем обьект книги в массиве БД
         uploadBaseBin(bazaBooks); // сохраняем БД
-        bazaReaders.set(bazaReaders.getIndexObject(reader), reader); // заменили запись в базе на обновленный обьект
+        bazaReaders.set(bazaReaders.getIndexByObject(reader), reader); // заменили запись в базе на обновленный обьект
         uploadBaseBin(bazaReaders); // сохраняем базу
 
         System.out.println("Читатель "+ reader.getName() +" взял книгу "+book.getNazvanieAndAvtor());

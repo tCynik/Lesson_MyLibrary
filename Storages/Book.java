@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book extends CommonDatabaseMethods implements Serializable {
+public class Book extends BooksAndReaders implements Serializable {
     private int number; // индивидуальный инвентарный номер книги
     private String nazvanie;
     private String avtor;
@@ -38,23 +38,28 @@ public class Book extends CommonDatabaseMethods implements Serializable {
     public void info(){
         int numberBookHolders = 0;
         String stringNumberbookHolders = null;
-        System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+        System.out.print("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
                 + kolichestvo+ " экземпляров,");
         try { // проверка есть ли вообще держатели этой книги
             numberBookHolders = bookHolders.size();
-            System.out.print("на руках у "+ numberBookHolders+" читателей: ");
+            System.out.print(" на руках у "+ numberBookHolders+" читателей: ");
             for (int i = 0; i < numberBookHolders - 1; i++) {
-                System.out.print(bookHolders.get(i).getName() + ", ");
+                System.out.println(bookHolders.get(i).getName() + ", ");
             }
             System.out.println( bookHolders.get(numberBookHolders - 1).getName()+".");
-        } catch (NullPointerException e) { stringNumberbookHolders = "на руках у читателей нет";}
+        } catch (NullPointerException e) { stringNumberbookHolders = "на руках у читателей нет";
+        } catch (IndexOutOfBoundsException e) { stringNumberbookHolders = "на руках у читателей нет";}
+    }
 
+    public void printLine() {
+        System.out.println("Книга инв. № "+ number + " "+ nazvanie+", автор "+avtor+", в библиотеке "
+                + kolichestvo+ " экземпляров, на руках у "+ bookHolders.size() +" читателей.");
     }
 
     public static int indexBookByNumber(int number){
         int index = 0;
         BookDataBase bazaTemp = new BookDataBase();
-        BookDataBase bazaBooks = (BookDataBase) downloadBaseBin(bazaTemp);
+        BookDataBase bazaBooks = (BookDataBase) Databases.downloadBaseBin(bazaTemp);
         for (Object theBook: bazaBooks) {
             Book book = (Book) theBook;
             if (book.getNumber() == number){
@@ -66,7 +71,7 @@ public class Book extends CommonDatabaseMethods implements Serializable {
 
     public static void bookTakeHolder(Reader bookHolder, int indexBook) { // записываем ID держателя книги
         BookDataBase bazaTemp = new BookDataBase();
-        BookDataBase bazaBooks = (BookDataBase) downloadBaseBin(bazaTemp);
+        BookDataBase bazaBooks = (BookDataBase) Databases.downloadBaseBin(bazaTemp);
         Book theKniga = (Book) bazaBooks.get(indexBook);
         theKniga.bookHolders.add(bookHolder); // добавляем в лист копию карточки читателя
         bazaBooks.set(indexBook, theKniga); // изменяем параметр и перезаисываем в нашем массиве

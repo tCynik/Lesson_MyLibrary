@@ -27,7 +27,7 @@ public class ReaderDataBase extends Databases {
     @Override
     public void printLine(Object object) {
         Reader reader = (Reader) object;
-        reader.info();
+        reader.printLine();
     }
 }
 

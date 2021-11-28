@@ -46,7 +46,7 @@ public class BookOptionsMenu extends Menu {
                 System.out.println("put the book");
                 break;
             case "main":
-                main();
+                exitToMain();
                 break;
             case "up":
                 flag = menuUp();

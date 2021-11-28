@@ -1,9 +1,12 @@
 package Menu;
+
+import Storages.BookDataBase;
+import Storages.Databases;
+import Storages.ReaderDataBase;
+
 /**
  * Меню опций действия управления записями читателей и базой данных по читателям
  */
-
-import Storages.*;
 
 public class ReadersMenu extends Menu {
     String adress = "Главное меню\\Читатели\\_";
@@ -31,7 +34,9 @@ public class ReadersMenu extends Menu {
                 break;
             case "list":
                 System.out.println("Список читателей библиотеки:");
-                CommonDatabaseMethods.showAll(CommonDatabaseMethods.downloadBaseBin(new ReaderDataBase()));
+                Databases menu = Databases.downloadBaseBin(new ReaderDataBase());
+                menu.printAll();
+                //Databases.showAll(Databases.downloadBaseBin(new ReaderDataBase()));
                 break;
             case "reader":
                 chooseReader(command);
@@ -40,7 +45,7 @@ public class ReadersMenu extends Menu {
                 System.out.println("working with the datbase");
                 break;
             case "main":
-                main();
+                exitToMain();
                 break;
             case "up":
                 flag = menuUp();

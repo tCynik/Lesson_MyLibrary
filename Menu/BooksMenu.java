@@ -1,7 +1,7 @@
 package Menu;
 
 import Storages.BookDataBase;
-import Storages.CommonDatabaseMethods;
+import Storages.Databases;
 
 public class BooksMenu extends Menu {
     String adress = "Главное меню\\Книги\\_";
@@ -29,7 +29,14 @@ public class BooksMenu extends Menu {
                 break;
             case "list":
                 System.out.println("Список книг:");
-                CommonDatabaseMethods.showAll(CommonDatabaseMethods.downloadBaseBin(new BookDataBase()));
+                Databases menu = Databases.downloadBaseBin(new BookDataBase());
+                menu.printAll();
+                //menu.printBase();
+
+                //CommonDatabaseMethods.showAll(CommonDatabaseMethods.downloadBaseBin(new BookDataBase()));
+                ////// убрать срань, сделать прямую ссылку на метод в суперклассе
+                ////// повторить в меню читателей
+                ////// убить лишний метод
                 break;
             case "book":
                 chooseBook(command);
@@ -41,7 +48,7 @@ public class BooksMenu extends Menu {
                 flag = menuUp();
                 break;
             case "main":
-                main();
+                exitToMain();
                 break;
             case "exit":
                 menuExit();
