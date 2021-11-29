@@ -42,12 +42,20 @@ public class Book extends BooksAndReaders implements Serializable {
                 + kolichestvo+ " экземпляров,");
         try { // проверка есть ли вообще держатели этой книги
             numberBookHolders = bookHolders.size();
-            System.out.print(" на руках у "+ numberBookHolders+" читателей: ");
+            System.out.println(" на руках у "+ numberBookHolders+" читателей: ");
+////// выводится адрес размещения книги
             for (int i = 0; i < numberBookHolders - 1; i++) {
-                System.out.println(bookHolders.get(i).getName() + ", ");
+                Reader reader = bookHolders.get(i);
+                String name = reader.getName();
+                int bilet = reader.getNumber();
+                System.out.println((i+1) + ". " + name + " читательский билет № "+ bilet +"; ");
+
             }
-            System.out.println( bookHolders.get(numberBookHolders - 1).getName()+".");
-        } catch (NullPointerException e) { stringNumberbookHolders = "на руках у читателей нет";
+            Reader reader = bookHolders.get(numberBookHolders - 1); // выводим последнего
+            String name = reader.getName();
+            int bilet = reader.getNumber();
+            System.out.println( numberBookHolders + ". " + name + " читательский билет № "+ bilet +".");
+        } catch (NullPointerException e) { stringNumberbookHolders = "на руках у читателей этой книги нет";
         } catch (IndexOutOfBoundsException e) { stringNumberbookHolders = "на руках у читателей нет";}
     }
 

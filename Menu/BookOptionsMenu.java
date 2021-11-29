@@ -37,7 +37,7 @@ public class BookOptionsMenu extends Menu {
                 chooseReader(command);
                 break;
             case "book":
-                chooseBook(command);
+                chooseBookToStartBookMenu(command);
                 break;
             case "take":
                 System.out.println("take the book");

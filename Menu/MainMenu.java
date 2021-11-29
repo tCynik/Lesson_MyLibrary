@@ -39,7 +39,7 @@ public class MainMenu extends Menu{
                 chooseReader(command);
                 break;
             case "book":
-                chooseBook(command);
+                chooseBookToStartBookMenu(command);
                 break;
             case "exit":
                 menuExit();

@@ -73,13 +73,6 @@ public class Databases extends ArrayList { // родительский клас�
     return object;
     }
 
-    public void printBase(){
-        for (int i = 0; i<size(); i++) {
-            Object object = get(i);
-            printLine(object);
-        }
-    }
-
     public void printLine (Object object) {}
 
     public void printAll(){

@@ -39,7 +39,7 @@ public class BooksMenu extends Menu {
                 ////// убить лишний метод
                 break;
             case "book":
-                chooseBook(command);
+                chooseBookToStartBookMenu(command);
                 break;
             case "view":
                 System.out.println("view readers");

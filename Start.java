@@ -16,8 +16,11 @@ public class Start {
         BookDataBase booksData = (BookDataBase) Databases.downloadBaseTxt(new BookDataBase());
         Databases.uploadBaseBin(booksData);
         Databases.uploadBaseBin(readersData);
-        //BookDataBase booksData1 = (BookDataBase) Manager.downloadBaseTxt(new BookDataBase());
-        //booksData1 = (BookDataBase) Manager.downloadBaseBin(new BookDataBase());
+        Reader.dolgiPastLoad(0, "2, 5, 8, 1, 4");
+        Reader.dolgiPastLoad(1, "9, 2, 13");
+        Reader.dolgiPastLoad(2, "13, 10, 8, 1");
+        Reader.dolgiPastLoad(3, "5, 2, 10, 1");
+
 
         Menu.MainMenu menu = new Menu.MainMenu();
         System.out.println("Программа <<Билиотекарь>> запущена. Введите команду.");

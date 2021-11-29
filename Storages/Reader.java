@@ -32,17 +32,28 @@ public class Reader extends BooksAndReaders implements Serializable  {
         return number;
     }
 
-////////// в связи с рефакторингом методов, связанных со взятием книг, адаптировать фичу.
-//    public void dolgiPastLoad(String knigi, List<Book> bazaKnig){ // загружаем долги прошлого времени по книгам
-//        try {
-//            String[] knigiArray = knigi.split(", ");
-//            for (String theKniga : knigiArray) {
-//                int index = Book.getIndexByName(theKniga, bazaKnig);
-//                knigiNaRukah.add(bazaKnig.get(index)); // делаем запись в список книг на руках
-//                Book.bookTake(index, bazaKnig); // делаем запись в БД книг
-//            }
-//        } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
-//    }
+    public static void dolgiPastLoad(int readerIndex, String listBooksIndexes){ // загружаем долги прошлого времени по книгам
+        try {
+            String[] knigiArray = listBooksIndexes.trim().split(", ");
+            Databases bazaBooks = Databases.downloadBaseBin(new BookDataBase()); // загружаем базу
+            Databases bazaReaders = Databases.downloadBaseBin(new ReaderDataBase()); // загружаем базу
+            Reader reader = (Reader) bazaReaders.get(readerIndex);
+
+            for (String bookNumberString: knigiArray) {
+                int bookNumber = Integer.parseInt(bookNumberString);
+                int index = Book.indexBookByNumber(bookNumber);
+                Book book = (Book) bazaBooks.get(index);
+                book.bookTake(reader);
+                bazaBooks.set(index, book);
+                Databases.uploadBaseBin(bazaBooks);
+
+                reader.bookTake(book);
+                bazaReaders.set(readerIndex, reader);
+            }
+            Databases.uploadBaseBin(bazaReaders);
+        } catch (IndexOutOfBoundsException e) { System.out.println("недопустимый номер книги");
+        } catch (Exception e) { System.out.println("Возникла ошибка при загрузке файла!");}
+    }
 
     public void bookTake (Book book){
         knigiNaRukah.add(book);
@@ -68,14 +79,17 @@ public class Reader extends BooksAndReaders implements Serializable  {
             /////// тут поставить метод вывода списка книг у читателя. Если книг нет - так и пишем
             int skolkoKnig = knigiNaRukah.size();
             if (skolkoKnig > 0) {
-                System.out.print("На руках у читателя книги: ");
+                System.out.println("На руках у читателя книги: ");
                 String nazvanie;
+                int number;
                 for (int i = 0; i < skolkoKnig - 1; i++) {
-                    knigiNaRukah.get(i).getNazvanie();
-                    System.out.print((i+1)+ ". " + knigiNaRukah.get(i).getNazvanie() + ", ");
+                    nazvanie = knigiNaRukah.get(i).getNazvanie();
+                    number = knigiNaRukah.get(i).getNumber();
+                    System.out.println((i+1)+ ". " + nazvanie + " инв. № "+ number +"; ");
                 }
-                nazvanie = knigiNaRukah.get(skolkoKnig - 1).getNazvanie();
-                System.out.println((skolkoKnig-1) + ". " + nazvanie + "."); // печатаем последнюю книгу, печать кончается точкой
+                nazvanie = knigiNaRukah.get(skolkoKnig-1).getNazvanie();
+                number = knigiNaRukah.get(skolkoKnig-1).getNumber();
+                System.out.println((skolkoKnig) + ". " + nazvanie + " инв. № "+ number + "."); // печатаем последнюю книгу, печать кончается точкой
             } else System.out.println("У читателя нет книг на руках");
         } catch (Exception e) {
             System.out.println("Возникла ошибка при чтении базы данных");

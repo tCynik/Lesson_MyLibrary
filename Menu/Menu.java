@@ -82,16 +82,16 @@ public class Menu {
         menuCycle(menu);
     }
 
-    public void chooseBook(String[] command) {
+    public void chooseBookToStartBookMenu(String[] command) {
         if (command.length < 2) {
             System.out.print("Выберите номер книги_");
             Scanner scan = new Scanner(System.in);
             String num = scan.nextLine();
-            chooseBookNumber(num);
-        } else chooseBookNumber(command[1]);
+            chooseToEnterBook(num);
+        } else chooseToEnterBook(command[1]);
     }
 
-    private void chooseBookNumber(String numString) {
+    private void chooseToEnterBook(String numString) {
         int num = Integer.parseInt(String.valueOf(numString));
         num = indexBookByNumber(num); // выбираем индекс по номеру книги
         Databases bazaBooks = Databases.downloadBaseBin(new BookDataBase()); // загружаем базу
@@ -104,7 +104,7 @@ public class Menu {
 
     public static void menuWrongOption() {
         System.out.println("Неверная команда! Повторите ввод.");
-        System.out.println(" Для просмотра доступных команд введите <<help>>");
+        System.out.println("Для просмотра доступных команд введите <<help>>");
     }
 
     public void menuExit() {
@@ -162,11 +162,7 @@ public class Menu {
         switch (command) {
             case "list":
                 bazaBooks.printAll();
-                //CommonDatabaseMethods.showAll(bazaBooks);
                 break;
-//            case "help":
-//                CommonDatabaseMethods.showAll(new BookDataBase());
-//                break;
             case "exit":
                 Menu menu = new Menu();
                 menu.menuExit();
@@ -192,11 +188,16 @@ public class Menu {
     protected static void makeTheRecords(Reader reader, Book book, Databases bazaBooks, Databases bazaReaders) {
         reader.bookTake(book); // добавляем запись в список книг на руках
         book.bookTake(reader); // добавляем запись в карточку книги
+        int indexBook = bazaBooks.getIndexByObject(book);
+        int indexReader = bazaReaders.getIndexByObject(reader);
 
-        bazaBooks.set(bazaBooks.getIndexByObject(book), book); // меняем обьект книги в массиве БД
-        uploadBaseBin(bazaBooks); // сохраняем БД
-        bazaReaders.set(bazaReaders.getIndexByObject(reader), reader); // заменили запись в базе на обновленный обьект
-        uploadBaseBin(bazaReaders); // сохраняем базу
+        bazaBooks.set(indexBook, book); // меняем обьект книги в массиве БД
+        Databases.uploadBaseBin(bazaBooks); // сохраняем БД
+/////// следующая строчка не выполняется, выпадает ошибка Введите номер книги. <<list>> - вывод списка книг _ из метода
+///////     takeBook в классе chooseBookWhileTaking
+        bazaReaders.set(indexReader, reader); // заменили запись в базе на обновленный обьект
+        System.out.println("test");
+        Databases.uploadBaseBin(bazaReaders); // сохраняем базу
 
         System.out.println("Читатель "+ reader.getName() +" взял книгу "+book.getNazvanieAndAvtor());
 
